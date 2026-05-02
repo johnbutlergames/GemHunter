@@ -96,6 +96,11 @@ class Biome {
             this.exits = [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: -1 }];
             // spawn cannot be exited from bottom (that's where you came from)
         }
+        this.exits = this.exits.filter(e => {
+            if (e.x * this.r * 2 + this.x == 0 && e.y * this.r * 2 + this.y > 0) return false;
+            return true;
+        });
+        // remove exits that would conflict in the sea line from spawn
         this.neighboringBiomes = [];
     }
     async initialize() {
