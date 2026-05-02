@@ -14,6 +14,10 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "node": "^24.15.0"
+    "node": "^24.15.0",
+    "open": "^11.0.0"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
   }
 }

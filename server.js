@@ -7,9 +7,11 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const app = express();
 const port = 3000;
+const path = require('path');
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'index')));
 
 let models = [
     "gemma-3-1b-it",
@@ -40,6 +42,8 @@ app.post("/generate", async (req, res) => {
     }
 });
 
-app.listen(port, () => {
+app.listen(port, async () => {
     console.log(`Server running at http://localhost:${port}`);
+    const open = await import('open');
+    open.default(`http://localhost:${port}`);
 });
