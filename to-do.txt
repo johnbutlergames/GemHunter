@@ -13,5 +13,20 @@ concept art
 - npcs
 find better prompts for image generation
 make gemini smart
+get the API for the image generation
 
 Notes:
+Flat maps generated BEFORE the user crosses the border
+Fade to black and title screen of the world with the image attached
+5 (or some arbitrary value - could be based on difficulty the user wants?) worlds no matter what
+- all edges lock down besides the path you took so you can't generate more
+- minimap of the places you visited? --> stretch goal
+
+As the levels go on, increase difficulty somehow?
+- make the enemies hit harder, to encourage the hunter to look for 
+    powerups around the map instead of going straight from the gems
+- cost/benefit for speedrunners (do I want to risk time loss for potential life saved?)
+
+When the hunter has defeated the boss, the worlds become gray and sad.
+- Hunter walks home knowing they destroyed the world for no reason at all. 
+- "Look what you've done" moment
