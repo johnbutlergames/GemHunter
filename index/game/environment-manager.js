@@ -6,11 +6,21 @@ class EnvironmentManager {
         this.biomes = [];
         this.tiles = [];
         this.tiles.push(new Tile(0, 0));
-        this.biomes.push(new Biome(0, 0, 5, true));
+        //this.biomes.push(new Biome(0, 0, 5, true));
         //this.biomes.push(new Biome(10, -18, 10));
         //this.biomes.push(new Biome(-10, -18, 10));
 
+        this.initializeNoise();
+
         for (let biome of this.biomes) biome.initialize();
+    }
+    initializeNoise() {
+        this.noiseMap = [];
+        for (let x = -20; x < 20; x++) {
+            for (let y = -20; y < 20; y++) {
+                this.noiseMap.push({ x, y, value: noise(x * 0.1, y * 0.1, 0) });
+            }
+        }
     }
     get biomeNames() {
         let names = [];
@@ -54,7 +64,15 @@ class EnvironmentManager {
     update(dt) {
     }
     draw(dt) {
-        for (let tile of this.tiles) {
+        for (let o of this.noiseMap) {
+            this.ctx.save();
+            this.ctx.translate(o.x, o.y);
+            this.ctx.globalAlpha = o.value;
+            this.ctx.fillStyle = "black";
+            this.ctx.fillRect(0, 0, 1, 1);
+            this.ctx.restore();
+        }
+        /*for (let tile of this.tiles) {
             this.ctx.fillStyle = "black";
             this.ctx.fillRect(tile.x, tile.y, 1, 1);
         }
@@ -79,6 +97,6 @@ class EnvironmentManager {
                 this.ctx.fillText(biome.name, biome.x, biome.y);
             }
         }
-        this.ctx.restore();
+        this.ctx.restore();*/
     }
 }
