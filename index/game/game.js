@@ -5,9 +5,11 @@ class Game {
         this.mouse = mouse;
         this.cam = new Cam();
         this.cam.link(canvas, ctx, mouse);
+        this.environmentManager = new EnvironmentManager(this);
     }
     update(dt) {
         this.cam.update(dt);
+        this.environmentManager.update(dt);
     }
     draw(dt) {
         this.ctx.save();
