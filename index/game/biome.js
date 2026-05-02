@@ -107,8 +107,9 @@ class Biome {
         console.log("----INITIALIZING BIOME----");
         this.initializeAttributes();
         await this.initializeName();
-        //await this.initializeMood();
-        //await this.initializeDescription();
+        await this.initializeMood();
+        await this.initializeDescription();
+        await this.initializeImage();
     }
     initializeAttributes() {
         console.log("....initializing base attributes....");
@@ -267,5 +268,11 @@ class Biome {
 
         console.log(data);
         this.description = data;
+    }
+    async initializeImage() {
+        console.log("....initializing image....");
+        let imageSrc = await generateImage(this.description.split(".")[1]);
+        this.image = new Image();
+        this.image.src = imageSrc;
     }
 }

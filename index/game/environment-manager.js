@@ -98,12 +98,13 @@ class EnvironmentManager {
             } else {
                 this.ctx.globalAlpha = 1;
             }
+            if(biome.image) {
+                this.ctx.drawImage(biome.image, biome.x - biome.r, biome.y - biome.r, biome.r * 2, biome.r * 2);
+            }
             if (biome.environment.tiles) {
                 for (let tile of biome.environment.tiles) {
                     if (!tile.discovered) continue;
                     this.ctx.strokeStyle = "rgb(0,0,0)";
-                    this.ctx.fillStyle = "rgba(200,0,0,0.5)";
-                    this.ctx.fillRect(tile.x, tile.y, 1, 1);
                     this.ctx.lineWidth = 0.1;
                     this.ctx.strokeRect(tile.x, tile.y, 1, 1);
                 }
