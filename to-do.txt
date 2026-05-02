@@ -1,0 +1,17 @@
+John:
+map
+
+
+
+
+Kate:
+README (mostly done, add collaboration/issue tracking?)
+github pages!
+concept art
+- pixel plants
+- animals
+- npcs
+find better prompts for image generation
+make gemini smart
+
+Notes:
