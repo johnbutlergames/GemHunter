@@ -1,4 +1,5 @@
 class EnvironmentManager {
+    static BIOME_SIZE = 12
     constructor(game) {
         this.game = game;
         this.ctx = game.ctx;
@@ -6,14 +7,14 @@ class EnvironmentManager {
         this.biomes = [];
         this.tiles = [];
         this.player = new Player(this.game);
-        this.player.y = 2;
-        this.biomes.push(new Biome(0, 0, 3, true));
+        this.player.y = EnvironmentManager.BIOME_SIZE / 2 - 1;
+        this.biomes.push(new Biome(0, 0, EnvironmentManager.BIOME_SIZE / 2, true));
         this.currentBiome = this.biomes[0];
+        //this.currentBiome.initialize();
         this.leaveBiomeArrow = new LeaveBiomeArrow(this);
 
         for (let biome of this.biomes) biome.environment.initializeTiles();
 
-        //for (let biome of this.biomes) biome.initialize();
     }
     get biomeNames() {
         let names = [];
@@ -35,8 +36,8 @@ class EnvironmentManager {
         this.currentBiome = this.createBiome(direction, this.currentBiome);
     }
     getNewBiomeCoordinates(biome, direction) {
-        let x = biome.x + 6 * direction.x;
-        let y = biome.y + 6 * direction.y;
+        let x = biome.x + EnvironmentManager.BIOME_SIZE * direction.x;
+        let y = biome.y + EnvironmentManager.BIOME_SIZE * direction.y;
         return { x, y };
     }
     reverseDirection(direction) {
@@ -46,7 +47,7 @@ class EnvironmentManager {
         let { x, y } = this.getNewBiomeCoordinates(current, direction);
         let oppositeDirection = this.reverseDirection(direction);
 
-        let biome = new Biome(x, y, 3, false);
+        let biome = new Biome(x, y, EnvironmentManager.BIOME_SIZE / 2, false);
         biome.environment.initializeTiles();
         this.biomes.push(biome);
         // add biome

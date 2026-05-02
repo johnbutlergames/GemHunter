@@ -17,9 +17,6 @@ async function generateImage(prompt) {
             if (!data.image) {
                 throw new Error("Invalid response format");
             }
-            return data.image; // returns a base64 image string
+            return data.image;
         });
 }
-
-// const image = await generateImage("pixel art forest village, warm colors");
-// document.getElementById("world-image").src = image;
