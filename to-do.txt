@@ -11,9 +11,10 @@ concept art
 - pixel plants
 - animals
 - npcs
+- buildings
 find better prompts for image generation
 make gemini smart
-get the API for the image generation
+DONE - get the API for the image generation
 
 Notes:
 Flat maps generated BEFORE the user crosses the border

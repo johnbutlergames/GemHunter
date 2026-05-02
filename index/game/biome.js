@@ -109,6 +109,7 @@ class Biome {
         await this.initializeName();
         await this.initializeMood();
         await this.initializeDescription();
+        await this.initializeImagePrompt();
         await this.initializeImage();
     }
     initializeAttributes() {
@@ -269,9 +270,24 @@ class Biome {
         console.log(data);
         this.description = data;
     }
+    async initializeImagePrompt() {
+        let prompt = [
+            this.description,
+            "",
+            `Turn this into a prompt for an AI image generator to create a pixel art image representing this biome: ${this.description}`,
+            `The prompt should be concise, and should focus on the visual aspects of the biome. The prompt should include the mood / color tone of the biome, as well as the types of plants that grow there. The prompt should not include the name of the biome.`,
+            `Only return the prompt, nothing else.`
+        ].join("\n");
+        this.imagePromptPrompt = prompt;
+        console.log(prompt);
+        let data = await sendPrompt(prompt);
+        data = data.replace(/\n/g, "");
+        console.log(data);
+        this.imagePrompt = data;
+    }
     async initializeImage() {
         console.log("....initializing image....");
-        let imageSrc = await generateImage(this.description.split(".")[1]);
+        let imageSrc = await generateImage(this.imagePrompt);
         this.image = new Image();
         this.image.src = imageSrc;
     }

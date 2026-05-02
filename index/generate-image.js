@@ -4,7 +4,7 @@ async function generateImage(prompt) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ prompt })
+        body: JSON.stringify({ style: "pixel-art", prompt })
     })
         .then(async (res) => {
             if (!res.ok) {
