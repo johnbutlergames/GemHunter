@@ -96,6 +96,7 @@ class Biome {
             this.exits = [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: -1 }];
             // spawn cannot be exited from bottom (that's where you came from)
         }
+        this.neighboringBiomes = [];
     }
     async initialize() {
         console.log("----INITIALIZING BIOME----");

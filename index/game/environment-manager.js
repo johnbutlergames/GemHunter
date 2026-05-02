@@ -22,8 +22,24 @@ class EnvironmentManager {
         }
         return names;
     }
-    leaveBiome() {
-        window.alert("leave biome")
+    leaveBiome(direction) {
+        this.player.x += direction.x;
+        this.player.y += direction.y;
+        let neighbor = this.currentBiome.neighboringBiomes.find(e => e.direction.x == direction.x && e.direction.y == direction.y);
+        if (neighbor) {
+            this.currentBiome = neighbor.biome;
+            return;
+        }
+
+        let oppositeDirection = { x: -direction.x, y: -direction.y };
+        let x = this.currentBiome.x + 6 * direction.x;
+        let y = this.currentBiome.y + 6 * direction.y;
+        let biome = new Biome(x, y, 3, false);
+        biome.environment.initializeTiles();
+        this.biomes.push(biome);
+        this.currentBiome.neighboringBiomes.push({ direction, biome });
+        biome.neighboringBiomes.push({ direction: oppositeDirection, biome: this.currentBiome });
+        this.currentBiome = biome;
     }
     addBiome(x, y) {
         let radius = this.biomes.reduce((a, b) => a + distTo(b.x, b.y, 0, 0) + b.r, 0);
@@ -61,7 +77,7 @@ class EnvironmentManager {
         this.player.update();
         if (this.game.mouse.click && !this.game.cam.justMoved) {
             let cors = this.game.cam.screenToGlobal(this.game.mouse.x, this.game.mouse.y);
-            let dir = dirTo(this.player.x,this.player.y,cors.x, cors.y);
+            let dir = dirTo(this.player.x, this.player.y, cors.x, cors.y);
             dir = Math.round(dir / 90) * 90;
             let move = distToMove(1, dir);
             move.x = Math.round(move.x);

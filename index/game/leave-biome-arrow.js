@@ -18,7 +18,7 @@ class LeaveBiomeArrow {
         if (cors.y < this.hitbox.y) return;
         if (cors.x > this.hitbox.x + this.hitbox.w) return;
         if (cors.y > this.hitbox.y + this.hitbox.h) return;
-        this.environmentManager.leaveBiome();
+        this.environmentManager.leaveBiome(this.getPlayerExitDirection());
     }
     get hitbox() {
         if (!this.playerOnBiomeEdge()) return null;
