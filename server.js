@@ -42,6 +42,26 @@ app.post("/generate", async (req, res) => {
     }
 });
 
+app.post("/generate-image", async (req, res) => {
+    try {
+        const { prompt } = req.body;
+        
+        const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&nologo=true`;
+        
+        const response = await fetch(imageUrl);
+        
+        if (!response.ok) throw new Error("Image generation failed");
+        
+        const buffer = await response.arrayBuffer();
+        const base64 = Buffer.from(buffer).toString("base64");
+        
+        res.json({ image: `data:image/jpeg;base64,${base64}` });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Image generation failed" });
+    }
+});
+
 app.listen(port, async () => {
     console.log(`Server running at http://localhost:${port}`);
     const open = await import('open');
