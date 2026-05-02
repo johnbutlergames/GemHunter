@@ -1,6 +1,4 @@
 # GemHunter
-An open-world RPG where every experience is unique.
-
 ## About
 GemHunter is a browser-based RPG that uses Google Gemini to generate a unique world every time you play. Each world gets a Gemini-crafted description, an AI-generated pixel art landscape, and a color palette pulled directly from that image.
 
