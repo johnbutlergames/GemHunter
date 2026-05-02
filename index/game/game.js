@@ -3,11 +3,18 @@ class Game {
         this.canvas = canvas;
         this.ctx = ctx;
         this.mouse = mouse;
+        this.cam = new Cam();
+        this.cam.link(canvas, ctx, mouse);
     }
-    update() {
+    update(dt) {
+        this.cam.update(dt);
+    }
+    draw(dt) {
+        this.ctx.save();
+        this.cam.alignViewport();
 
-    }
-    draw() {
-        
+        this.environmentManager.draw(dt);
+
+        this.ctx.restore();
     }
 }
