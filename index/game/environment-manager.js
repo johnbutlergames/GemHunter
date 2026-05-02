@@ -82,21 +82,30 @@ class EnvironmentManager {
             let move = distToMove(1, dir);
             move.x = Math.round(move.x);
             move.y = Math.round(move.y);
+            let oldX = this.player.x;
+            let oldY = this.player.y;
             this.player.x += move.x;
             this.player.y += move.y;
             this.player.x = Math.max(this.player.x, this.currentBiome.x - this.currentBiome.r);
             this.player.x = Math.min(this.player.x, this.currentBiome.x + this.currentBiome.r - 1);
             this.player.y = Math.max(this.player.y, this.currentBiome.y - this.currentBiome.r);
             this.player.y = Math.min(this.player.y, this.currentBiome.y + this.currentBiome.r - 1);
+            if (oldX != this.player.x || oldY != this.player.y) this.game.mouse.click = false;
         }
         this.leaveBiomeArrow.update();
+        this.currentBiome.environment.discoverTiles(this.player.x, this.player.y);
     }
     draw(dt) {
-        this.ctx.save();
-        this.ctx.globalAlpha = 0.5;
         for (let biome of this.biomes) {
+            this.ctx.save();
+            if (biome != this.currentBiome) {
+                this.ctx.globalAlpha = 0.5;
+            } else {
+                this.ctx.globalAlpha = 1;
+            }
             if (biome.environment.tiles) {
                 for (let tile of biome.environment.tiles) {
+                    if (!tile.discovered) continue;
                     this.ctx.strokeStyle = "rgb(0,0,0)";
                     this.ctx.fillStyle = "rgba(200,0,0,0.5)";
                     this.ctx.fillRect(tile.x, tile.y, 1, 1);
@@ -119,8 +128,8 @@ class EnvironmentManager {
                 this.ctx.strokeText(biome.name, biome.x, biome.y);
                 this.ctx.fillText(biome.name, biome.x, biome.y);
             }
+            this.ctx.restore();
         }
-        this.ctx.restore();
 
         this.player.draw();
         this.leaveBiomeArrow.draw();

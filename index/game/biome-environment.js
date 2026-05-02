@@ -11,4 +11,11 @@ class BiomeEnvironment {
             }
         }
     }
+    discoverTiles(x, y) {
+        for (let tile of this.tiles) {
+            if (tile.discovered) continue;
+            let dist = distTo(x, y, tile.x, tile.y);
+            if (dist < 3) tile.discovered = true;
+        }
+    }
 }
