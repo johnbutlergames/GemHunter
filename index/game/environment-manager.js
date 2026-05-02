@@ -5,22 +5,12 @@ class EnvironmentManager {
         this.tiles = [];
         this.biomes = [];
         this.tiles = [];
-        this.tiles.push(new Tile(0, 0));
-        //this.biomes.push(new Biome(0, 0, 5, true));
-        //this.biomes.push(new Biome(10, -18, 10));
-        //this.biomes.push(new Biome(-10, -18, 10));
+        this.biomes.push(new Biome(0, 0, 10, true));
+        this.biomes.push(new Biome(0, -20, 10, true));
 
-        this.initializeNoise();
+        for (let biome of this.biomes) biome.environment.initializeTiles();
 
-        for (let biome of this.biomes) biome.initialize();
-    }
-    initializeNoise() {
-        this.noiseMap = [];
-        for (let x = -20; x < 20; x++) {
-            for (let y = -20; y < 20; y++) {
-                this.noiseMap.push({ x, y, value: noise(x * 0.1, y * 0.1, 0) });
-            }
-        }
+        //for (let biome of this.biomes) biome.initialize();
     }
     get biomeNames() {
         let names = [];
@@ -64,21 +54,18 @@ class EnvironmentManager {
     update(dt) {
     }
     draw(dt) {
-        for (let o of this.noiseMap) {
-            this.ctx.save();
-            this.ctx.translate(o.x, o.y);
-            this.ctx.globalAlpha = o.value;
-            this.ctx.fillStyle = "black";
-            this.ctx.fillRect(0, 0, 1, 1);
-            this.ctx.restore();
-        }
-        /*for (let tile of this.tiles) {
-            this.ctx.fillStyle = "black";
-            this.ctx.fillRect(tile.x, tile.y, 1, 1);
-        }
         this.ctx.save();
         this.ctx.globalAlpha = 0.5;
         for (let biome of this.biomes) {
+            if (biome.environment.tiles) {
+                for (let tile of biome.environment.tiles) {
+                    this.ctx.strokeStyle = "rgb(0,0,0)";
+                    this.ctx.fillStyle = "rgba(200,0,0,0.5)";
+                    this.ctx.fillRect(tile.x, tile.y, 1, 1);
+                    this.ctx.lineWidth = 0.1;
+                    this.ctx.strokeRect(tile.x, tile.y, 1, 1);
+                }
+            }
             this.ctx.strokeStyle = "black";
             this.ctx.lineWidth = 1;
             this.ctx.beginPath();
@@ -97,6 +84,6 @@ class EnvironmentManager {
                 this.ctx.fillText(biome.name, biome.x, biome.y);
             }
         }
-        this.ctx.restore();*/
+        this.ctx.restore();
     }
 }

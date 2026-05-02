@@ -88,9 +88,8 @@ class Biome {
         this.x = x;
         this.y = y;
         this.r = r;
-        // x, y, and r determine the biomes effect radius
-
         this.spawn = spawn;
+        this.environment = new BiomeEnvironment(this);
     }
     async initialize() {
         console.log("----INITIALIZING BIOME----");
