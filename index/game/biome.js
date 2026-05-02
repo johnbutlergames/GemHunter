@@ -274,9 +274,9 @@ class Biome {
         let prompt = [
             this.description,
             "",
-            `Turn this into a prompt for an AI image generator to create a pixel art image representing this biome: ${this.description}`,
+            `Turn this into a prompt for an AI image generator to create a pixel art landscape image representing this biome: ${this.description}`,
             `The prompt should be concise, and should focus on the visual aspects of the biome. The prompt should include the mood / color tone of the biome, as well as the types of plants that grow there. The prompt should not include the name of the biome.`,
-            `Only return the prompt, nothing else.`
+            `Only return the prompt, nothing else. Make sure the prompt includes the words "pixel art landscape" to ensure the image is generated in the correct style.`
         ].join("\n");
         this.imagePromptPrompt = prompt;
         console.log(prompt);
