@@ -5,8 +5,11 @@ class EnvironmentManager {
         this.tiles = [];
         this.biomes = [];
         this.tiles = [];
-        this.biomes.push(new Biome(0, 0, 10, true));
-        this.biomes.push(new Biome(0, -20, 10, true));
+        this.player = new Player(this.game);
+        this.player.y = 2;
+        this.biomes.push(new Biome(0, 0, 3, true));
+        this.currentBiome = this.biomes[0];
+        this.leaveBiomeArrow = new LeaveBiomeArrow(this);
 
         for (let biome of this.biomes) biome.environment.initializeTiles();
 
@@ -18,6 +21,9 @@ class EnvironmentManager {
             if (biome.name) names.push(biome.name);
         }
         return names;
+    }
+    leaveBiome() {
+        window.alert("leave biome")
     }
     addBiome(x, y) {
         let radius = this.biomes.reduce((a, b) => a + distTo(b.x, b.y, 0, 0) + b.r, 0);
@@ -52,6 +58,22 @@ class EnvironmentManager {
         this.biomes.push(biome);
     }
     update(dt) {
+        this.player.update();
+        if (this.game.mouse.click && !this.game.cam.justMoved) {
+            let cors = this.game.cam.screenToGlobal(this.game.mouse.x, this.game.mouse.y);
+            let dir = dirTo(this.player.x,this.player.y,cors.x, cors.y);
+            dir = Math.round(dir / 90) * 90;
+            let move = distToMove(1, dir);
+            move.x = Math.round(move.x);
+            move.y = Math.round(move.y);
+            this.player.x += move.x;
+            this.player.y += move.y;
+            this.player.x = Math.max(this.player.x, this.currentBiome.x - this.currentBiome.r);
+            this.player.x = Math.min(this.player.x, this.currentBiome.x + this.currentBiome.r - 1);
+            this.player.y = Math.max(this.player.y, this.currentBiome.y - this.currentBiome.r);
+            this.player.y = Math.min(this.player.y, this.currentBiome.y + this.currentBiome.r - 1);
+        }
+        this.leaveBiomeArrow.update();
     }
     draw(dt) {
         this.ctx.save();
@@ -68,9 +90,7 @@ class EnvironmentManager {
             }
             this.ctx.strokeStyle = "black";
             this.ctx.lineWidth = 1;
-            this.ctx.beginPath();
-            this.ctx.arc(biome.x, biome.y, biome.r, 0, 2 * Math.PI);
-            this.ctx.stroke();
+            this.ctx.strokeRect(biome.x - biome.r, biome.y - biome.r, biome.r * 2, biome.r * 2);
 
             if (biome.name) {
                 this.ctx.lineJoin = "round";
@@ -85,5 +105,8 @@ class EnvironmentManager {
             }
         }
         this.ctx.restore();
+
+        this.player.draw();
+        this.leaveBiomeArrow.draw();
     }
 }

@@ -90,6 +90,12 @@ class Biome {
         this.r = r;
         this.spawn = spawn;
         this.environment = new BiomeEnvironment(this);
+
+        this.exits = [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: 1 }, { x: 0, y: -1 }];
+        if (this.spawn) {
+            this.exits = [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: -1 }];
+            // spawn cannot be exited from bottom (that's where you came from)
+        }
     }
     async initialize() {
         console.log("----INITIALIZING BIOME----");

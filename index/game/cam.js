@@ -51,10 +51,16 @@ class Cam {
         if (this.mouse.buttons[0]) {
             let deltaX = this.mouse.x - this.movingOrigin.mouseX;
             let deltaY = this.mouse.y - this.movingOrigin.mouseY;
-            this.x = this.movingOrigin.x + deltaX / this.zoom;
-            this.y = this.movingOrigin.y + deltaY / this.zoom;
-        } else {
+            let dist = distTo(0, 0, deltaX, deltaY);
+            if (dist > 10 || this.justMoved) {
+                this.justMoved = true;
+                this.x = this.movingOrigin.x + deltaX / this.zoom;
+                this.y = this.movingOrigin.y + deltaY / this.zoom;
+            }
+        } else if (this.movingOrigin) {
             this.movingOrigin = null;
+        } else {
+            this.justMoved = false;
         }
     }
     getViewport() {
