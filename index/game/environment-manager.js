@@ -10,11 +10,9 @@ class EnvironmentManager {
         this.player.y = EnvironmentManager.BIOME_SIZE / 2 - 1;
         this.biomes.push(new Biome(0, 0, EnvironmentManager.BIOME_SIZE / 2, true));
         this.currentBiome = this.biomes[0];
-        //this.currentBiome.initialize();
+        this.currentBiome.initialize();
+        this.currentBiome.environment.initializeTiles();
         this.leaveBiomeArrow = new LeaveBiomeArrow(this);
-
-        for (let biome of this.biomes) biome.environment.initializeTiles();
-
     }
     get biomeNames() {
         let names = [];
@@ -49,6 +47,7 @@ class EnvironmentManager {
 
         let biome = new Biome(x, y, EnvironmentManager.BIOME_SIZE / 2, false);
         biome.environment.initializeTiles();
+        biome.initialize();
         this.biomes.push(biome);
         // add biome
 

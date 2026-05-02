@@ -107,8 +107,8 @@ class Biome {
         console.log("----INITIALIZING BIOME----");
         this.initializeAttributes();
         await this.initializeName();
-        await this.initializeMood();
-        await this.initializeDescription();
+        //await this.initializeMood();
+        //await this.initializeDescription();
     }
     initializeAttributes() {
         console.log("....initializing base attributes....");
