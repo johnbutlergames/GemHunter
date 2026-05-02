@@ -32,46 +32,41 @@ class EnvironmentManager {
         }
 
         let oppositeDirection = { x: -direction.x, y: -direction.y };
-        let x = this.currentBiome.x + 6 * direction.x;
-        let y = this.currentBiome.y + 6 * direction.y;
+        this.currentBiome = this.createBiome(direction, this.currentBiome);
+    }
+    getNewBiomeCoordinates(biome, direction) {
+        let x = biome.x + 6 * direction.x;
+        let y = biome.y + 6 * direction.y;
+        return { x, y };
+    }
+    reverseDirection(direction) {
+        return { x: -direction.x, y: -direction.y };
+    }
+    createBiome(direction, current) {
+        let { x, y } = this.getNewBiomeCoordinates(current, direction);
+        let oppositeDirection = this.reverseDirection(direction);
+
         let biome = new Biome(x, y, 3, false);
         biome.environment.initializeTiles();
         this.biomes.push(biome);
-        this.currentBiome.neighboringBiomes.push({ direction, biome });
-        biome.neighboringBiomes.push({ direction: oppositeDirection, biome: this.currentBiome });
-        this.currentBiome = biome;
-    }
-    addBiome(x, y) {
-        let radius = this.biomes.reduce((a, b) => a + distTo(b.x, b.y, 0, 0) + b.r, 0);
-        let dir = dirTo(0, 0, x, y);
-        let move = distToMove(radius, dir);
+        // add biome
 
-        let biome = new Biome(move.x, move.y, Math.random() * 5 + 7);
-        for (let n = 0; n < 20; n++) {
-            let dist = Math.min(...this.biomes.map(e => distTo(e.x, e.y, biome.x, biome.y)));
-            let dir = dirTo(biome.x, biome.y, 0, 0);
-            let move = distToMove(Math.max(5, dist * 2 / 3), dir);
-            biome.x += move.x;
-            biome.y += move.y;
-            if (this.biomes.some(e => distTo(e.x, e.y, biome.x, biome.y) < e.r + biome.r + 2)) break;
-        }
-        dir = dirTo(biome.x, biome.y, 0, 0);
-        move = distToMove(5, dir);
-        biome.x -= move.x;
-        biome.y -= move.y;
-        for (let n = 0; n < 10; n++) {
-            for (let o of this.biomes) {
-                let dist = distTo(biome.x, biome.y, o.x, o.y);
-                if (dist > o.r + biome.r + 2) continue;
-                let collisionDist = o.r + biome.r + 2 - dist;
-                let dir = dirTo(biome.x, biome.y, o.x, o.y);
-                let move = distToMove(collisionDist, dir + 180);
-                biome.x += move.x;
-                biome.y += move.y;
+        current.neighboringBiomes.push({ direction, biome });
+        biome.neighboringBiomes.push({ direction: oppositeDirection, biome: current });
+        // update neighbors for biome this one was created by
+
+        for (let exit of biome.exits) {
+            if (biome.neighboringBiomes.find(e => e.direction.x == exit.x && e.direction.y == exit.y)) continue;
+            let cors = this.getNewBiomeCoordinates(biome, exit);
+            for (let biome2 of this.biomes) {
+                if (biome2.x != cors.x || biome2.y != cors.y) continue;
+                biome.neighboringBiomes.push({ direction: exit, biome: biome2 });
+                biome2.neighboringBiomes.push({ direction: this.reverseDirection(direction), biome });
             }
         }
-        biome.initialize();
-        this.biomes.push(biome);
+        // check for already existing biomes that would neighbor this one
+
+        return biome;
     }
     update(dt) {
         this.player.update();
