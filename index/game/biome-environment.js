@@ -13,15 +13,16 @@ class BiomeEnvironment {
     }
     async initializeTiles() {
         let biome = this.biome;
-        let palette = await sniffImage(biome.image);
+        let palette = biome.palette;
+        let slopColors = biome.slopColors;
         let cloudsImage = Tile.cloudsImage;
         let colors = [
-            ...palette.palette.dominant,
-            palette.palette.foreground,
-            palette.palette.ground,
-            palette.palette.horizon,
-            palette.palette.midground,
-            palette.palette.sky
+            ...palette.dominant,
+            palette.foreground,
+            palette.ground,
+            palette.horizon,
+            palette.midground,
+            palette.sky
         ];
         colors = colors.sort((a, b) => {
             return hexToLightness(b) - hexToLightness(a);
@@ -46,7 +47,7 @@ class BiomeEnvironment {
         this.grassImage = await recolorImage(
             Tile.grassImage,
             ["#cccccc", "#bbbbbb", "#949494", "#878787", "#8f8f8f", "#adadad", "#7d7d7d", "#5f5f5f"],
-            [colors[0], colors[1], colors[1], colors[2], colors[2], colors[3], colors[3], colors[7]]
+            [biome.slopColors.grass || colors[0], biome.slopColors["grass-accent"] || colors[1], colors[1], colors[2], colors[2], colors[3], colors[3], colors[7]]
         );
 
         this.deadGrassImage = await recolorImage(
@@ -58,7 +59,7 @@ class BiomeEnvironment {
         this.flowerImage = await recolorImage(
             Tile.flowerImage,
             ["#444444", "#5f5f5f", "#b0b0b0", "#767676"],
-            [colors[4], colors[5], colors[0], colors[1]]
+            [colors[4], colors[5], biome.slopColors["flower-primary"] || colors[0], biome.slopColors["flower-secondary"] || colors[1]]
         );
         this.deadFlowerImage = await recolorImage(
             Tile.deadFlowerImage,

@@ -1,6 +1,7 @@
 class EnvironmentManager {
-    static BIOME_SIZE = 10
-    static SKIP_BIOME_ANIMATION = true
+    static BIOME_SIZE = 40
+    static SKIP_BIOME_ANIMATION = false
+    static STOP_CACHE = false
     constructor(game) {
         this.game = game;
         this.ctx = game.ctx;
@@ -127,7 +128,7 @@ class EnvironmentManager {
         this.currentBiome.visited = true;
     }
     updateBiomeCache(dt) {
-        if (this.biomes.length >= 5) {
+        if (this.biomes.length >= 5 || EnvironmentManager.STOP_CACHE) {
             this.biomeCache = [];
             return;
         }

@@ -30,6 +30,19 @@
     <script src="game/gem.js"></script>
 
     <script src="index.js" defer></script>
+
+    <script>
+        async function loadFonts() {
+            const font1 = new FontFace('text', 'url(assets/text.ttf)');
+            const font2 = new FontFace('title', 'url(assets/title.ttf)');
+
+            await font1.load();
+            await font2.load();
+            document.fonts.add(font1);
+            document.fonts.add(font2);
+        }
+        loadFonts();
+    </script>
 </head>
 
 <body>
