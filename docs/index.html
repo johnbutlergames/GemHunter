@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GemHunter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">GemHunter</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#how">How it works</a>
+    <a href="#install">Install</a>
+    <a href="#team">Team</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="gem-orbit" id="orbit"></div>
+
+  <div class="hero-eyebrow">✦ A Hackathon Project ✦</div>
+  <h1 class="hero-title">GemHunter</h1>
+  <div class="hero-subtitle">An AI-generated open world RPG</div>
+
+  <div class="gem-row-hero">
+    <div class="gem-pip pip-color-1"></div>
+    <div class="gem-pip pip-color-2"></div>
+    <div class="gem-pip pip-color-3"></div>
+    <div class="gem-pip pip-color-4"></div>
+    <div class="gem-pip pip-color-5"></div>
+  </div>
+
+  <p class="hero-sub">
+    Every world is <em>unique</em> — and your choices
+    leave a mark that can never be undone.
+  </p>
+
+  <div class="hero-warning">⚠ collect all gems at your own risk ⚠</div>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <span class="section-tag">// 01 — about</span>
+  <h2>A world built by AI.<br>Destroyed by you.</h2>
+
+  <p>GemHunter is a browser-based pixel art RPG where <strong>Google Gemini generates a unique world every time you play</strong> — crafting a landscape description, generating pixel art through AI image generation, and extracting a color palette directly from that image to paint your map.</p>
+
+  <p>Each world is alive. The gems you're hunting are the <strong>lifeblood of the people who live there</strong>. You can choose to explore peacefully, leaving every world intact. Or you can take the gems — and watch what happens on your way back out.</p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🌍</span>
+      <div class="feature-title">Procedural worlds</div>
+      <div class="feature-desc">Walk off the edge of any map to discover a new biome. Up to 5 unique AI-generated worlds per run, each with its own palette and feel.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🎨</span>
+      <div class="feature-title">AI color extraction</div>
+      <div class="feature-desc">Colors are pulled directly from each generated landscape image and used to paint the game world — grass, rock, sky and all.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💎</span>
+      <div class="feature-title">Five gems, five worlds</div>
+      <div class="feature-desc">Each gem belongs to a world. Collect them all and a boss awaits — but so does the long walk home through everything you've taken.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🩶</span>
+      <div class="feature-title">Your choice matters</div>
+      <div class="feature-desc">The game never forces you to collect anything. The desolation at the end only exists if you caused it.</div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <span class="section-tag">// 02 — how it works</span>
+  <h2>From prompt to<br>playable world.</h2>
+
+  <p>Every time you enter a new biome, a small pipeline runs behind the scenes to bring it to life.</p>
+
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-num c1">01</div>
+      <div class="step-body">
+        <div class="step-title">Gemini describes the world</div>
+        <p class="step-desc">A Gemini model generates a rich biome description — the climate, flora, mood, and feeling of the place. This becomes the seed for everything else.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-num c2">02</div>
+      <div class="step-body">
+        <div class="step-title">An image is generated</div>
+        <p class="step-desc">The description is turned into an image generation prompt and sent to Pollinations.AI, which returns a pixel art landscape of the biome.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-num c3">03</div>
+      <div class="step-body">
+        <div class="step-title">Colors are extracted</div>
+        <p class="step-desc">A custom image sniffer samples the image in horizontal strips (sky, horizon, midground, ground) and finds vivid accent colors — catching small details like flowers that averages would miss.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-num c4">04</div>
+      <div class="step-body">
+        <div class="step-title">Gemini paints the map</div>
+        <p class="step-desc">The palette is sent back to Gemini along with the biome description. It assigns colors to grass, ground, rock, plants, and special terrain — then the map is drawn on canvas.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-num c5">05</div>
+      <div class="step-body">
+        <div class="step-title">You decide what happens next</div>
+        <p class="step-desc">The world is yours. Explore, or hunt. But remember — the gems belong to someone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- INSTALL -->
+<section id="install">
+  <span class="section-tag">// 03 — try it yourself</span>
+  <h2>Get it running<br>in four steps.</h2>
+
+  <p>You'll need <strong>Node.js</strong> and a free <strong>Google Gemini API key</strong> — no credit card required.</p>
+
+  <div class="install-steps">
+    <div class="install-step">
+      <div class="install-num">01</div>
+      <div>
+        <div class="install-title">Clone the repository</div>
+        <div class="install-desc"><code>git clone https://github.com/yourusername/gemhunter.git</code> then <code>cd gemhunter</code></div>
+      </div>
+    </div>
+    <div class="install-step">
+      <div class="install-num">02</div>
+      <div>
+        <div class="install-title">Install dependencies</div>
+        <div class="install-desc">Run <code>npm install</code> in the project root.</div>
+      </div>
+    </div>
+    <div class="install-step">
+      <div class="install-num">03</div>
+      <div>
+        <div class="install-title">Add your Gemini API key</div>
+        <div class="install-desc">Get a free key at <strong>aistudio.google.com/app/apikey</strong> — no billing needed. Create a <code>.env</code> file and add <code>GEMINI_API_KEY=your_key_here</code>.</div>
+      </div>
+    </div>
+    <div class="install-step">
+      <div class="install-num">04</div>
+      <div>
+        <div class="install-title">Start the game</div>
+        <div class="install-desc">Run <code>npm run start</code> — your browser will open automatically.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">✦ The Gemini free tier is generous enough to play through multiple full runs. No surprises.</div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- TEAM -->
+<section id="team">
+  <span class="section-tag">// 04 — the team</span>
+  <h2>Built in 23 hours.<br>Powered by caffeine.</h2>
+
+  <p>GemHunter was made at a hackathon by two siblings. One built the world, one documented it.</p>
+
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar c1">🧑‍💻</div>
+      <div class="team-name">Your Name</div>
+      <div class="team-role">Docs, design, gems & color pipeline</div>
+      <div class="team-links">
+        <a class="team-link" href="https://github.com/yourusername" target="_blank">GitHub</a>
+        <a class="team-link" href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar c5">🧑‍💻</div>
+      <div class="team-name">Brother's Name</div>
+      <div class="team-role">Backend, map generation & game engine</div>
+      <div class="team-links">
+        <a class="team-link" href="https://github.com/brothersusername" target="_blank">GitHub</a>
+        <a class="team-link" href="https://linkedin.com/in/brothersusername" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">GemHunter</span>
+  Made with ♥ and very little sleep · Built on Google Gemini · Hackathon 2025
+</footer>
+
+<script>
+  const orbit = document.getElementById('orbit');
+  const gemColors = ['#56ab2f','#f5a623','#2980b9','#c0392b','#7b2fbe'];
+  for (let i = 0; i < 18; i++) {
+    const gem = document.createElement('div');
+    gem.className = 'orb-gem';
+    gem.style.cssText = `
+      left: ${10 + Math.random() * 80}%;
+      top: ${20 + Math.random() * 60}%;
+      background: ${gemColors[Math.floor(Math.random() * gemColors.length)]};
+      width: ${6 + Math.random() * 8}px;
+      height: ${6 + Math.random() * 8}px;
+      animation-duration: ${3 + Math.random() * 4}s;
+      animation-delay: ${Math.random() * 4}s;
+      box-shadow: 0 0 8px currentColor;
+    `;
+    orbit.appendChild(gem);
+  }
+</script>
+</body>
+</html>
