@@ -25,5 +25,5 @@ GemHunter was built as a hackathon project at Oregon State University! If you'd 
 - More varied gem types and boss designs
 - Additional flora and fauna
 
-- ## Authors
+## Authors
 Built with love (and very little sleep) by [John Butler](https://github.com/johnbutlergames) and [Kathryn Butler](https://github.com/KathrynJButler/).
