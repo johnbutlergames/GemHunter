@@ -14,8 +14,11 @@ class Game {
         this.state = "idle";
         this.biomeTransition = null;
         this.loadingBiome = null;
+
+        this.t = 0;
     }
     update(dt) {
+        this.t += dt;
         this.cam.update(dt);
         if (this.state == "idle") this.updateIdleState(dt);
         if (this.state == "start biome transition") this.startBiomeTransition(dt);
