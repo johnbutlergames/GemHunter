@@ -10,6 +10,9 @@ class Gem {
         this.type = type;
         this.animation = 0;
     }
+    collect() {
+        this.collected = true;
+    }
     update(dt) {
         this.animation += dt;
     }

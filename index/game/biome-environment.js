@@ -2,6 +2,14 @@ class BiomeEnvironment {
     constructor(biome) {
         this.biome = biome;
         this.tiles = [];
+        this.killed = false;
+    }
+    kill() {
+        if (this.killed) return;
+        this.killed = true;
+        for (let tile of this.tiles) {
+            tile.killTime = 50 + Math.random() * 400;
+        }
     }
     async initializeTiles() {
         let biome = this.biome;
@@ -23,6 +31,11 @@ class BiomeEnvironment {
             ["#c7c7c7", "#b4b4b4", "#848484", "#464646"],
             [colors[0], colors[1], colors[2], colors[7]]
         );
+        this.grayCloudsImage = await recolorImage(
+            Tile.cloudsImage,
+            ["#c7c7c7", "#b4b4b4", "#848484", "#464646"],
+            ["#c7c7c7", "#b4b4b4", "#848484", "#464646"]
+        );
 
         let size = EnvironmentManager.BIOME_SIZE;
         let x = biome.x + Math.floor(Math.random() * size / 2) - Math.round(size / 4);
@@ -36,6 +49,12 @@ class BiomeEnvironment {
             [colors[0], colors[1], colors[1], colors[2], colors[2], colors[3], colors[3], colors[7]]
         );
 
+        this.deadGrassImage = await recolorImage(
+            Tile.deadGrassImage,
+            ["#cccccc", "#bbbbbb", "#949494", "#878787", "#8f8f8f", "#adadad", "#7d7d7d", "#5f5f5f"],
+            ["#cccccc", "#bbbbbb", "#949494", "#878787", "#8f8f8f", "#adadad", "#7d7d7d", "#5f5f5f"]
+        );
+
         let grassVariations = [0, 1, 2, 3];
         grassVariations.splice(Math.floor(Math.random() * grassVariations.length), 1);
         grassVariations.splice(Math.floor(Math.random() * grassVariations.length), 1);
@@ -44,7 +63,7 @@ class BiomeEnvironment {
             for (let y = biome.y - biome.r; y < biome.y + biome.r; y++) {
                 if (Math.random() < 0.4) {
                     let variation = Math.floor(Math.random() * 2);
-                    this.tiles.push(new Tile(this, x, y, colors[0], this.grassImage, grassVariations[variation]));
+                    this.tiles.push(new Tile(this, x, y, colors[0], this.grassImage, this.deadGrassImage, grassVariations[variation]));
                 } else {
                     this.tiles.push(new Tile(this, x, y, colors[0]));
                 }

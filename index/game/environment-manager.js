@@ -110,8 +110,14 @@ class EnvironmentManager {
         for (let tile of this.currentBiome.environment.tiles) {
             tile.update(dt);
         }
-        if(this.currentBiome?.environment?.gem) {
-            this.currentBiome.environment.gem.update(dt);
+        if (this.currentBiome?.environment?.gem) {
+            let gem = this.currentBiome.environment.gem;
+            gem.update(dt);
+            let dist = distTo(this.player.x, this.player.y, gem.x, gem.y);
+            if (dist < 0.5 && !gem.collected) {
+                gem.collect();
+                this.currentBiome.environment.kill();
+            }
         }
 
         this.currentBiome.visited = true;
