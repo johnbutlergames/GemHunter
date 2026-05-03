@@ -6,6 +6,10 @@ class Tile {
         this.grassImage.src = "assets/grass-25-25.png";
         this.deadGrassImage = new Image();
         this.deadGrassImage.src = "assets/grass-dead-25-25.png";
+        this.flowerImage = new Image();
+        this.flowerImage.src = "assets/flowers-25-25.png";
+        this.deadFlowerImage = new Image();
+        this.deadFlowerImage.src = "assets/flowers-dead-25-25.png";
     }
     constructor(environment, x, y, color, image, deadImage, variation) {
         this.environment = environment;
