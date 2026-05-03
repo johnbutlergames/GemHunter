@@ -1,4 +1,6 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { extractBiomePalette } = require('./index/game/image-sniffer');
+
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
@@ -47,18 +49,49 @@ app.post("/generate-image", async (req, res) => {
         const { prompt } = req.body;
         
         const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}`;
-        
         const response = await fetch(imageUrl);
-        
         if (!response.ok) throw new Error("Image generation failed");
         
-        const buffer = await response.arrayBuffer();
-        const base64 = Buffer.from(buffer).toString("base64");
+        const buffer = Buffer.from(await response.arrayBuffer());
+        const base64 = buffer.toString("base64");
+        const palette = await extractBiomePalette(buffer);
         
-        res.json({ image: `data:image/jpeg;base64,${base64}` });
+        res.json({ 
+            image: `data:image/jpeg;base64,${base64}`,
+            palette
+            // e.g. {
+            //   sky:        "#7ab3d4",
+            //   horizon:    "#c4a882",
+            //   midground:  "#4a7c3f",
+            //   ground:     "#8b6344",
+            //   foreground: "#5c3d1e"
+            //   "dominant": [
+            //     "#526c70",
+            //     "#182b34",
+            //     "#748c90",
+            //     "#91acad",
+            //     "#364e52",
+            //     "#253538",
+            //     "#2d4b36",
+            //     "#4c6c53"
+            //   ]
+            // }
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Image generation failed" });
+    }
+});
+
+app.get("/test-palette", async (req, res) => {
+    try {
+        const fs = require('fs');
+        const buffer = fs.readFileSync('./index/game/valley.jpg');
+        const palette = await extractBiomePalette(buffer);
+        res.json(palette);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message }); // err.message will show the REAL error
     }
 });
 
