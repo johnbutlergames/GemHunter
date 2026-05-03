@@ -5,19 +5,13 @@ map
 
 
 Kate:
-README (mostly done, add collaboration/issue tracking?)
+DONE - README
 github pages!
-concept art
 DONE - pixel plants
-- animals
-- npcs
-- buildings
 DONE - font/subfont
 
 DONE - character sprite, gem sprite, arrow, 
 
-find better prompts for image generation
-make gemini smart
 DONE - get the API for the image generation
 DONE - image sniffer
 
