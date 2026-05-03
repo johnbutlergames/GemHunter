@@ -126,9 +126,6 @@ class EnvironmentManager {
             } else {
                 this.ctx.globalAlpha = 1;
             }
-            if (biome.image) {
-                this.ctx.drawImage(biome.image, biome.x - biome.r, biome.y - biome.r, biome.r * 2, biome.r * 2);
-            }
             if (biome.environment.tiles) {
                 for (let tile of biome.environment.tiles) {
                     if (!tile.discovered) continue;
@@ -138,20 +135,9 @@ class EnvironmentManager {
                 }
             }
             this.ctx.strokeStyle = "black";
-            this.ctx.lineWidth = 1;
+            this.ctx.lineWidth = 0.1;
             this.ctx.strokeRect(biome.x - biome.r, biome.y - biome.r, biome.r * 2, biome.r * 2);
 
-            if (biome.name) {
-                this.ctx.lineJoin = "round";
-                this.ctx.lineWidth = 0.2;
-                this.ctx.strokeStyle = "white";
-                this.ctx.fillStyle = "black";
-                this.ctx.font = "2px Times New Roman";
-                this.ctx.textAlign = "center";
-                this.ctx.textBaseline = "middle";
-                this.ctx.strokeText(biome.name, biome.x, biome.y);
-                this.ctx.fillText(biome.name, biome.x, biome.y);
-            }
             this.ctx.restore();
         }
 

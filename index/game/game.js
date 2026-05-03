@@ -6,6 +6,7 @@ class Game {
         this.cam = new Cam();
         this.cam.link(canvas, ctx, mouse);
         this.environmentManager = new EnvironmentManager(this);
+        this.sideBar = new SideBar(this);
 
         this.state = "idle";
         this.biomeTransition = null;
@@ -83,6 +84,8 @@ class Game {
         this.environmentManager.draw(dt);
 
         this.ctx.restore();
+        
+        this.sideBar.draw();
 
         this.drawBiomeTransition();
     }
