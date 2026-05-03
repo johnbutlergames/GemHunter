@@ -24,6 +24,12 @@ class BiomeEnvironment {
             [colors[0], colors[1], colors[2], colors[7]]
         );
 
+        let size = EnvironmentManager.BIOME_SIZE;
+        let x = biome.x + Math.floor(Math.random() * size / 2) - Math.round(size / 4);
+        let y = biome.y + Math.floor(Math.random() * size / 2) - Math.round(size / 4);
+        this.gemLocation = { x, y };
+        this.gem = new Gem(x, y, this.biome.id);
+
         for (let x = biome.x - biome.r; x < biome.x + biome.r; x++) {
             for (let y = biome.y - biome.r; y < biome.y + biome.r; y++) {
                 this.tiles.push(new Tile(this, x, y));

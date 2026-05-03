@@ -1,6 +1,6 @@
 class EnvironmentManager {
-    static BIOME_SIZE = 40
-    static SKIP_BIOME_ANIMATION = false
+    static BIOME_SIZE = 10
+    static SKIP_BIOME_ANIMATION = true
     constructor(game) {
         this.game = game;
         this.ctx = game.ctx;
@@ -10,7 +10,7 @@ class EnvironmentManager {
         this.tiles = [];
         this.player = new Player(this.game);
         this.player.y = EnvironmentManager.BIOME_SIZE / 2 - 1;
-        this.biomes.push(new Biome(0, 0, EnvironmentManager.BIOME_SIZE / 2, true));
+        this.biomes.push(new Biome(0, 0, EnvironmentManager.BIOME_SIZE / 2, true, 0));
         this.currentBiome = this.biomes[0];
         this.currentBiome.initialize();
         this.currentBiome.initializeExits();
@@ -77,7 +77,7 @@ class EnvironmentManager {
             biome.y = y;
             biome.initializeTiles();
         } else {
-            biome = new Biome(x, y, EnvironmentManager.BIOME_SIZE / 2, false);
+            biome = new Biome(x, y, EnvironmentManager.BIOME_SIZE / 2, false, this.biomes.length + this.biomeCache.length);
             biome.initialize();
             biome.initializeTiles();
         }
@@ -110,6 +110,9 @@ class EnvironmentManager {
         for (let tile of this.currentBiome.environment.tiles) {
             tile.update(dt);
         }
+        if(this.currentBiome?.environment?.gem) {
+            this.currentBiome.environment.gem.update(dt);
+        }
 
         this.currentBiome.visited = true;
     }
@@ -121,7 +124,7 @@ class EnvironmentManager {
         if (!this.allBiomesInitialized()) return;
         if (this.biomeCache.length && !this.biomeCache[this.biomeCache.length - 1].initialized) return;
         if (this.biomeCache.length + this.biomes.length >= 5) return;
-        let biome = new Biome(null, null, EnvironmentManager.BIOME_SIZE / 2, false);
+        let biome = new Biome(null, null, EnvironmentManager.BIOME_SIZE / 2, false, this.biomes.length + this.biomeCache.length);
         biome.initialize();
         this.biomeCache.push(biome);
     }
@@ -142,6 +145,9 @@ class EnvironmentManager {
             for (let tile of visibleTiles) {
                 tile.drawBackground(this.ctx);
             }
+
+            if (biome.environment?.gem) biome.environment.gem.draw(ctx);
+
             for (let tile of visibleTiles) {
                 tile.drawCloudBackground(this.ctx);
             }
