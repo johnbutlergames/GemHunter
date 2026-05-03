@@ -145,6 +145,9 @@ class EnvironmentManager {
             for (let tile of visibleTiles) {
                 tile.drawBackground(this.ctx);
             }
+            for (let tile of visibleTiles) {
+                tile.drawTile(this.ctx);
+            }
 
             if (biome.environment?.gem) biome.environment.gem.draw(ctx);
 

@@ -30,9 +30,21 @@ class BiomeEnvironment {
         this.gemLocation = { x, y };
         this.gem = new Gem(x, y, this.biome.id);
 
+        let grassImage = new Image();
+        grassImage.src = "assets/grass-25-25.png";
+
+        let grassVariations = [0, 1, 2, 3];
+        grassVariations.splice(Math.floor(Math.random() * grassVariations.length), 1);
+        grassVariations.splice(Math.floor(Math.random() * grassVariations.length), 1);
+
         for (let x = biome.x - biome.r; x < biome.x + biome.r; x++) {
             for (let y = biome.y - biome.r; y < biome.y + biome.r; y++) {
-                this.tiles.push(new Tile(this, x, y));
+                if (Math.random() < 0.4) {
+                    let variation = Math.floor(Math.random() * 2);
+                    this.tiles.push(new Tile(this, x, y, grassImage, grassVariations[variation]));
+                } else {
+                    this.tiles.push(new Tile(this, x, y));
+                }
             }
         }
     }
