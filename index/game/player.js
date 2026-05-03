@@ -51,6 +51,8 @@ class Player {
         if (this.game.cam.justMoved) return;
         let cors = this.game.cam.screenToGlobal(this.game.mouse.x, this.game.mouse.y);
         let dir = dirTo(this.x, this.y, cors.x, cors.y);
+        let dist = distTo(this.x, this.y, cors.x - 0.5, cors.y - 0.5);
+        if (dist < 1) return;
         dir = Math.round(dir / 90) * 90;
         let move = distToMove(1, dir);
         move.x = Math.round(move.x);
@@ -75,7 +77,8 @@ class Player {
         this.y = Math.max(this.y, currentBiome.y - currentBiome.r);
         this.y = Math.min(this.y, currentBiome.y + currentBiome.r - 1);
 
-        this.direction = move;
+        this.direction.y = move.y;
+        if (move.x) this.direction.x = move.x;
     }
     animateMove(x1, y1, x2, y2) {
         this.state = "moving animation";
