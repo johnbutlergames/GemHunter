@@ -7,7 +7,7 @@ class Tile {
         this.deadGrassImage = new Image();
         this.deadGrassImage.src = "assets/grass-dead-25-25.png";
     }
-    constructor(environment, x, y, image, variation) {
+    constructor(environment, x, y, color, image, variation) {
         this.environment = environment;
         this.x = x;
         this.y = y;
@@ -22,16 +22,27 @@ class Tile {
         this.xOffset = Math.random() * 0.2 - 0.1;
         this.yOffset = Math.random() * 0.2 - 0.1;
         this.noise = noise(this.x * 2 + Math.random() * 0.1, this.y * 2 + Math.random() * 0.1, 500);
+        this.color = color;
+
+        this.killTime = 0;
+        this.dead = false;
     }
     update(dt) {
         if (this.discovered) {
             this.discoverAnimation += dt;
         }
+        if (this.killTime) {
+            this.killTime--;
+            if (this.killTime <= 0) {
+                this.dead = true;
+                this.killTime = 0;
+            }
+        }
     }
     drawBackground(ctx) {
         ctx.save();
-        ctx.fillStyle = "black";
-        ctx.globalAlpha = this.noise;
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.noise ** 2 * 2;
         ctx.fillRect(this.x - 0.01, this.y - 0.01, 1.02, 1.02);
         ctx.restore();
     }

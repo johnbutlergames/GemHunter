@@ -44,9 +44,9 @@ class BiomeEnvironment {
             for (let y = biome.y - biome.r; y < biome.y + biome.r; y++) {
                 if (Math.random() < 0.4) {
                     let variation = Math.floor(Math.random() * 2);
-                    this.tiles.push(new Tile(this, x, y, this.grassImage, grassVariations[variation]));
+                    this.tiles.push(new Tile(this, x, y, colors[0], this.grassImage, grassVariations[variation]));
                 } else {
-                    this.tiles.push(new Tile(this, x, y));
+                    this.tiles.push(new Tile(this, x, y, colors[0]));
                 }
             }
         }
