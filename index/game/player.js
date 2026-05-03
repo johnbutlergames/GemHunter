@@ -1,5 +1,5 @@
 class Player {
-    static MOVE_TIME = 25
+    static MOVE_TIME = 20
     constructor(game) {
         this.game = game;
         this.ctx = game.ctx;
@@ -14,21 +14,21 @@ class Player {
 
         this.state = "idle";
     }
-    update() {
+    update(dt) {
         if (this.state == "idle") {
-            this.updateKeyboardMovement();
-            this.updateMouseMovement();
+            this.updateKeyboardMovement(dt);
+            this.updateMouseMovement(dt);
         } else if (this.state == "moving animation") {
-            this.updateMovingAnimation();
+            this.updateMovingAnimation(dt);
         }
-        this.updateTileDiscovery();
+        this.updateTileDiscovery(dt);
     }
     updateTileDiscovery() {
         let currentBiome = this.game.environmentManager.currentBiome;
         if (!currentBiome?.environment) return;
         currentBiome.environment.discoverTiles(this.x, this.y);
     }
-    updateKeyboardMovement() {
+    updateKeyboardMovement(dt) {
         let oldX = this.x;
         let oldY = this.y;
         if (Keys.keys.a || Keys.keys.ArrowLeft) {
@@ -42,11 +42,11 @@ class Player {
         }
         if (oldX != this.x || oldY != this.y) {
             this.animateMove(oldX, oldY, this.x, this.y);
-            this.updateMovingAnimation();
+            this.updateMovingAnimation(dt);
             Keys.down = {};
         }
     }
-    updateMouseMovement() {
+    updateMouseMovement(dt) {
         if (!this.game.mouse.down) return;
         if (this.game.cam.justMoved) return;
         let cors = this.game.cam.screenToGlobal(this.game.mouse.x, this.game.mouse.y);
@@ -65,7 +65,7 @@ class Player {
 
         if (oldX != this.x || oldY != this.y) {
             this.animateMove(oldX, oldY, this.x, this.y);
-            this.updateMovingAnimation();
+            this.updateMovingAnimation(dt);
         }
     }
     move(move) {
@@ -91,13 +91,13 @@ class Player {
             y2
         };
     }
-    updateMovingAnimation() {
-        this.movingAnimation.time++;
+    updateMovingAnimation(dt) {
+        this.movingAnimation.time += dt;
         let a = this.movingAnimation.time / Player.MOVE_TIME;
         this.x = this.movingAnimation.x1 * (1 - a) + this.movingAnimation.x2 * a;
         this.y = this.movingAnimation.y1 * (1 - a) + this.movingAnimation.y2 * a;
 
-        if (this.movingAnimation.time == Player.MOVE_TIME) {
+        if (this.movingAnimation.time >= Player.MOVE_TIME) {
             this.x = this.movingAnimation.x2;
             this.y = this.movingAnimation.y2;
             this.state = "idle";

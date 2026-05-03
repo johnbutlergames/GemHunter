@@ -41,6 +41,10 @@ function extractDominantColors(data, width, height, channels, numColors = 6) {
         ));
 }
 
+async function extractBiomepaletteFromURL(url) {
+    return await extractBiomepalette(await imageToBlob(url));
+}
+
 async function extractBiomePalette(buffer) {
     const { data, info } = await sharp(buffer)
         .resize(100, 100) // downsample for speed
@@ -82,7 +86,7 @@ async function extractBiomePalette(buffer) {
         );
     }
 
-    // console.log("Extracted biome palette:", {
+    // console.log("Extracted biome pa;lette:", {
     //     sky: sampleStrip(0.0, 0.25),
     //     horizon: sampleStrip(0.25, 0.45),
     //     midground: sampleStrip(0.45, 0.65),
@@ -91,16 +95,32 @@ async function extractBiomePalette(buffer) {
     // });
 
     const palette = {
-        sky:        sampleStrip(0.0, 0.25),
-        horizon:    sampleStrip(0.25, 0.45),
-        midground:  sampleStrip(0.45, 0.65),
-        ground:     sampleStrip(0.65, 0.85),
+        sky: sampleStrip(0.0, 0.25),
+        horizon: sampleStrip(0.25, 0.45),
+        midground: sampleStrip(0.45, 0.65),
+        ground: sampleStrip(0.65, 0.85),
         foreground: sampleStrip(0.85, 1.0),
-        dominant:   extractDominantColors(data, width, height, channels, 8)
+        dominant: extractDominantColors(data, width, height, channels, 8)
     };
 
-    console.log("Biome palette:", JSON.stringify(palette, null, 2));
     return palette;
 }
 
-module.exports = { extractBiomePalette };
+const { createCanvas, loadImage } = require('canvas');
+
+async function imageToBlob(url) {
+    const img = await loadImage(url);
+
+    const canvas = createCanvas(img.width, img.height);
+    const ctx = canvas.getContext('2d');
+
+    ctx.drawImage(img, 0, 0);
+
+    return new Promise((resolve) => {
+        canvas.toBuffer((err, buffer) => {
+            resolve(new Blob([buffer], { type: 'image/png' }));
+        });
+    });
+}
+
+module.exports = { extractBiomePalette, extractBiomepaletteFromURL };

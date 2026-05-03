@@ -19,9 +19,9 @@ class Game {
         this.cam.update(dt);
         if (this.state == "idle") this.updateIdleState(dt);
         if (this.state == "start biome transition") this.startBiomeTransition(dt);
-        if (this.state == "biome transition") this.updateBiomeTransitionState(dt);
+        if (this.state == "biome transition") this.updateBiomeTransitionState(dt * 2);
         if (this.state == "start biome short transition") this.startBiomeShortTransition(dt);
-        if (this.state == "biome short transition") this.updateBiomeTransitionState(dt);
+        if (this.state == "biome short transition") this.updateBiomeTransitionState(dt * 2);
     }
     updateIdleState(dt) {
         this.environmentManager.update(dt);
@@ -42,7 +42,7 @@ class Game {
         };
     }
     updateBiomeTransitionState(dt) {
-        this.biomeTransition.animation++;
+        this.biomeTransition.animation += dt;
         if (this.biomeTransition.animation > 100 && this.biomeTransition.ending) {
             this.endBiomeTransitionState();
             return;
