@@ -11,9 +11,9 @@ class Tile {
         this.discovered = false;
         this.discoverAnimation = 0;
     }
-    update() {
+    update(dt) {
         if (this.discovered) {
-            this.discoverAnimation++;
+            this.discoverAnimation += dt;
         }
     }
     drawBackground(ctx) {

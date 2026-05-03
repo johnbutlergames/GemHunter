@@ -42,7 +42,7 @@ class Game {
         };
     }
     updateBiomeTransitionState(dt) {
-        this.biomeTransition.animation++;
+        this.biomeTransition.animation += dt;
         if (this.biomeTransition.animation > 100 && this.biomeTransition.ending) {
             this.endBiomeTransitionState();
             return;

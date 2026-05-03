@@ -103,17 +103,17 @@ class EnvironmentManager {
         return biome;
     }
     update(dt) {
-        this.player.update();
-        this.leaveBiomeArrow.update();
-        this.updateBiomeCache();
+        this.player.update(dt);
+        this.leaveBiomeArrow.update(dt);
+        this.updateBiomeCache(dt);
 
         for (let tile of this.currentBiome.environment.tiles) {
-            tile.update();
+            tile.update(dt);
         }
 
         this.currentBiome.visited = true;
     }
-    updateBiomeCache() {
+    updateBiomeCache(dt) {
         if (this.biomes.length >= 5) {
             this.biomeCache = [];
             return;

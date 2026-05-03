@@ -4,11 +4,12 @@ let lastTime = performance.now();
 
 function gameLoop(now) {
     let deltaTime = (now - lastTime) / 1000;
+    let deltaFrames = deltaTime * 60;
     lastTime = now;
 
-    game.update(deltaTime);
+    game.update(deltaFrames);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    game.draw(deltaTime);
+    game.draw(deltaFrames);
 
     Keys.down = {};
     Keys.up = {};

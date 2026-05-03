@@ -12,8 +12,8 @@ class LeaveBiomeArrow {
         this.mouse = this.game.mouse;
         this.player = this.environmentManager.player;
     }
-    update() {
-        this.leaveAnimation++;
+    update(dt) {
+        this.leaveAnimation += dt;
         this.currentBiome = this.environmentManager.currentBiome;
         if (!this.playerOnBiomeEdge()) return;
         if (!this.playerCanLeaveBiome()) return;
