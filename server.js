@@ -46,7 +46,7 @@ app.post("/generate-image", async (req, res) => {
     try {
         const { prompt } = req.body;
         
-        const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&nologo=true`;
+        const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}`;
         
         const response = await fetch(imageUrl);
         
