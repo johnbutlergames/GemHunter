@@ -309,6 +309,7 @@ class Biome {
         this.image = await new Promise((resolve, reject) => {
             let image = new Image();
             image.src = imageSrc;
+            this.image = image;
             image.onload = () => resolve(image);
         });
     }
