@@ -12,9 +12,13 @@ concept art
 - animals
 - npcs
 - buildings
+
+character sprite, gem sprite, arrow, font/subfont
+
 find better prompts for image generation
 make gemini smart
 DONE - get the API for the image generation
+DONE - image sniffer
 
 Notes:
 Flat maps generated BEFORE the user crosses the border

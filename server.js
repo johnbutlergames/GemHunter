@@ -83,18 +83,6 @@ app.post("/generate-image", async (req, res) => {
     }
 });
 
-app.get("/test-palette", async (req, res) => {
-    try {
-        const fs = require('fs');
-        const buffer = fs.readFileSync('./index/game/valley.jpg');
-        const palette = await extractBiomePalette(buffer);
-        res.json(palette);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: err.message }); // err.message will show the REAL error
-    }
-});
-
 app.listen(port, async () => {
     console.log(`Server running at http://localhost:${port}`);
     const open = await import('open');
