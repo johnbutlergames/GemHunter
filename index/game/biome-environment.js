@@ -29,12 +29,12 @@ class BiomeEnvironment {
         this.cloudsImage = await recolorImage(
             Tile.cloudsImage,
             ["#c7c7c7", "#b4b4b4", "#848484", "#464646"],
-            [colors[0], colors[1], colors[2], colors[7]]
+            [...[colors[0], colors[1], colors[2]].map(e => lightenHex(e, 0.4)), lightenHex(colors[7], 0.1)]
         );
         this.grayCloudsImage = await recolorImage(
             Tile.cloudsImage,
             ["#c7c7c7", "#b4b4b4", "#848484", "#464646"],
-            ["#c7c7c7", "#b4b4b4", "#848484", "#464646"]
+            [...["#c7c7c7", "#b4b4b4", "#848484"].map(e => lightenHex(e, 0.4)), lightenHex("#464646", 0.1)]
         );
 
         let size = EnvironmentManager.BIOME_SIZE;

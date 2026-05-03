@@ -20,6 +20,7 @@ class Gem {
         if (this.collected) return;
         ctx.save();
         ctx.translate(this.x + 0.5, this.y + 0.5);
+        ctx.translate(0, Math.round(Math.sin(this.animation / 10)) * -0.05);
         ctx.scale(0.7, 0.7);
         ctx.imageSmoothingEnabled = false;
         ctx.drawImage(Gem.gemImage, 20 * this.type, 0, 20, 20, -0.5, -0.5, 1, 1);
