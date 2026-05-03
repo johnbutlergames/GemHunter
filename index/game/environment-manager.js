@@ -4,6 +4,7 @@ class EnvironmentManager {
     constructor(game) {
         this.game = game;
         this.ctx = game.ctx;
+        this.canvas = game.canvas;
         this.tiles = [];
         this.biomes = [];
         this.tiles = [];
@@ -132,19 +133,19 @@ class EnvironmentManager {
             this.ctx.globalAlpha = 1;
         }
         if (biome.environment.tiles) {
-            for (let tile of biome.environment.tiles) {
-                this.ctx.fillStyle = "white";
-                this.ctx.fillRect(tile.x, tile.y, 1, 1);
-                this.ctx.strokeStyle = "rgba(0,0,0,0.1)";
-                this.ctx.lineWidth = 0.05;
-                this.ctx.strokeRect(tile.x, tile.y, 1, 1);
-
-                let a = 1 - Math.max(Math.min(1, tile.discoverAnimation / 50), 0);
-                this.ctx.save();
-                this.ctx.globalAlpha = a;
-                this.ctx.fillStyle = "rgb(100,100,100)";
-                this.ctx.fillRect(tile.x, tile.y, 1, 1);
-                this.ctx.restore();
+            let visibleTiles = biome.environment.tiles.filter(e => {
+                let { x, y } = this.game.cam.globalToScreen(e.x, e.y);
+                if (x < -100 || y < -100 || x > this.canvas.width + 100 || y > this.canvas.height + 100) return false;
+                return true;
+            })
+            for (let tile of visibleTiles) {
+                tile.drawBackground(this.ctx);
+            }
+            for (let tile of visibleTiles) {
+                tile.drawCloudBackground(this.ctx);
+            }
+            for (let tile of visibleTiles) {
+                tile.drawCloud(this.ctx);
             }
         }
 
