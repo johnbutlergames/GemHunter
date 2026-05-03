@@ -28,8 +28,8 @@ async function recolorImage(img, grayValues, colors) {
     // build lookup table
     const map = new Array(256);
     for (let i = 0; i < grayValues.length; i++) {
-        for (let j = -2; j <= 2; j++) {
-            map[hexToRgb(grayValues[i]).r + j] = hexToRgb(colors[i]);
+        for (let j = -4; j <= 4; j++) {
+            map[hexToRgb(grayValues[i]).g + j] = hexToRgb(colors[i]);
         }
     }
 
@@ -46,7 +46,7 @@ async function recolorImage(img, grayValues, colors) {
 
     // recolor
     for (let i = 0; i < data.length; i += 4) {
-        const gray = data[i]; // assume grayscale
+        const gray = data[i + 1]; // assume grayscale
         const c = map[gray];
         if (c) {
             data[i] = c.r;

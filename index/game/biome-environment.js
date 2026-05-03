@@ -30,9 +30,24 @@ class BiomeEnvironment {
         this.gemLocation = { x, y };
         this.gem = new Gem(x, y, this.biome.id);
 
+        this.grassImage = await recolorImage(
+            Tile.grassImage,
+            ["#cccccc", "#bbbbbb", "#949494", "#878787", "#8f8f8f", "#adadad", "#7d7d7d", "#5f5f5f"],
+            [colors[0], colors[1], colors[1], colors[2], colors[2], colors[3], colors[3], colors[7]]
+        );
+
+        let grassVariations = [0, 1, 2, 3];
+        grassVariations.splice(Math.floor(Math.random() * grassVariations.length), 1);
+        grassVariations.splice(Math.floor(Math.random() * grassVariations.length), 1);
+
         for (let x = biome.x - biome.r; x < biome.x + biome.r; x++) {
             for (let y = biome.y - biome.r; y < biome.y + biome.r; y++) {
-                this.tiles.push(new Tile(this, x, y));
+                if (Math.random() < 0.4) {
+                    let variation = Math.floor(Math.random() * 2);
+                    this.tiles.push(new Tile(this, x, y, colors[0], this.grassImage, grassVariations[variation]));
+                } else {
+                    this.tiles.push(new Tile(this, x, y, colors[0]));
+                }
             }
         }
     }
