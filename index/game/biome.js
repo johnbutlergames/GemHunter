@@ -73,6 +73,7 @@ const PRIMARY_STRUCTURE_NAME_CREATIVITY = [
 const BIOME_STRUCTURES = ["Refinery", "Vault", "Monolith", "Castle", "Obelisk", "Watchtower", "Observatory", "Citadel", "Shrine", "Temple", "Cave", "Station", "Warehouse", "Fortress", "Bastion", "Pyramid", "Circle", "Ruins", "Spire", "Tower", "Gate", "Chamber", "Laboratory", "Ritual Grounds", "Beacon", "Pillar", "Chasm", "Grotto", "Cairn", "Cavern", "Forge", "Island", "Port", "Shipwreck", "Village", "City", "Camp", "Shelter", "Hut", "Dock", "Clocktower", "Sanctuary"];
 
 class Biome {
+    static SKIP_INITIALIZATION = true;
     constructor(x, y, r, spawn) {
         this.x = x;
         this.y = y;
@@ -93,14 +94,18 @@ class Biome {
     async initialize() {
         console.log("----INITIALIZING BIOME----");
         this.initializeAttributes();
-        await this.initializeName();
-        await this.initializeMood();
-        await this.initializeDescription();
-        await this.initializeImagePrompt();
-        await this.initializeImage();
-        //this.name = "Mistwood";
-        //this.image = new Image();
-        //this.image.src = "assets/mistwood.jpg";
+
+        if (Biome.SKIP_INITIALIZATION) {
+            this.name = "Mistwood";
+            this.image = new Image();
+            this.image.src = "assets/mistwood.jpg";
+        } else {
+            await this.initializeName();
+            await this.initializeMood();
+            await this.initializeDescription();
+            await this.initializeImagePrompt();
+            await this.initializeImage();
+        }
 
         console.log("----BIOME INITIALIZATION COMPLETE----")
         this.initialized = true;

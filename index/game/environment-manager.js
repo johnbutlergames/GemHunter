@@ -56,7 +56,6 @@ class EnvironmentManager {
     }
     switchBiome() {
         this.currentBiome = this.targetBiome;
-        this.targetBiome = null;
         let direction = this.leaveBiomeDirection;
         this.player.x += direction.x;
         this.player.y += direction.y;
