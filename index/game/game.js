@@ -102,7 +102,7 @@ class Game {
 
         this.ctx.save();
         if (angle == 0) {
-            this.ctx.translate(this.canvas.width, this.canvas.height);
+            this.ctx.translate(this.canvas.width, 0);
             this.ctx.rotate(180 * Math.PI / 180);
         } else if (angle == 90) {
             this.ctx.translate(this.canvas.width, this.canvas.height);
@@ -123,7 +123,6 @@ class Game {
         this.ctx.fillStyle = grd;
         this.ctx.fillRect(0, 0, size, size + gradientWidth);
         this.ctx.restore();
-
 
         let gradientAnimation = easeInOut(this.biomeTransition.animation - 200) * (1 - easeInOut(this.biomeTransition.animation - 1000));
         let imageTransition = easeInOut((this.biomeTransition.animation - 200) / 150) * (1 - easeInOut((this.biomeTransition.animation - 900) / 100));

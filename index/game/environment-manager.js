@@ -1,6 +1,6 @@
 class EnvironmentManager {
     static BIOME_SIZE = 4
-    static SKIP_BIOME_ANIMATION = true
+    static SKIP_BIOME_ANIMATION = false
     constructor(game) {
         this.game = game;
         this.ctx = game.ctx;
