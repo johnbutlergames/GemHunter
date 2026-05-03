@@ -116,7 +116,11 @@ class EnvironmentManager {
             let dist = distTo(this.player.x, this.player.y, gem.x, gem.y);
             if (dist < 0.5 && !gem.collected) {
                 gem.collect();
-                this.currentBiome.environment.kill();
+            }
+        }
+        if(this.biomes.every(e=>e.environment?.gem?.collected) && this.biomes.length == 5) {
+            for(let biome of this.biomes) {
+                biome.environment.kill();
             }
         }
 
