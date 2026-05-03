@@ -1,5 +1,5 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const { extractBiomePalette } = require("./image-sniffer");
+const { extractBiomePalette, extractBiomePaletteFromURL } = require("./image-sniffer");
 
 const express = require("express");
 const cors = require("cors");
@@ -68,6 +68,12 @@ app.post("/generate-image", async (req, res) => {
 app.post("/sniff-image", async (req, res) => {
     const buffer = req.body;
     const palette = await extractBiomePalette(buffer);
+    res.json({ palette });
+});
+
+app.post("/sniff-image-file", async (req, res) => {
+    const url = req.body.src;
+    const palette = await extractBiomePaletteFromURL(url);
     res.json({ palette });
 });
 

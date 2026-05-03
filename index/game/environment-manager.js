@@ -14,9 +14,9 @@ class EnvironmentManager {
         this.currentBiome = this.biomes[0];
         this.currentBiome.initialize();
         this.currentBiome.initializeExits();
+        this.currentBiome.initializeTiles();
         this.targetBiome = null;
         this.leaveBiomeDirection = null;
-        this.currentBiome.environment.initializeTiles();
         this.leaveBiomeArrow = new LeaveBiomeArrow(this);
         this.biomeCache = [];
     }

@@ -16,6 +16,23 @@ async function sniffImage(image) {
         });
 }
 
+async function sniffImageFile(image) {
+    return fetch("http://localhost:3000/sniff-image-file", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ src: image.src })
+    })
+        .then(async (res) => {
+            if (!res.ok) {
+                const errorText = await res.text();
+                throw new Error(`Server error: ${res.status} ${errorText}`);
+            }
+            return res.json();
+        });
+}
+
 function dataURLtoBlob(dataUrl) {
     const [meta, base64] = dataUrl.split(",");
     const mime = meta.match(/:(.*?);/)[1];

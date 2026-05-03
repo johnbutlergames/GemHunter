@@ -29,7 +29,7 @@ class Cam {
     }
     update(dt) {
         if (!this.game.environmentManager.player) return;
-        let follow = 0.03 * dt;
+        let follow = Math.min(0.05 * dt, 1);
 
         let player = this.game.environmentManager.player;
         this.x = this.x * (1 - follow) - (player.x + 0.5) * follow;

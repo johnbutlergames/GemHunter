@@ -3,7 +3,8 @@ class Tile {
         this.cloudsImage = new Image();
         this.cloudsImage.src = "assets/clouds-25-25v2.png";
     }
-    constructor(x, y) {
+    constructor(environment, x, y) {
+        this.environment = environment;
         this.x = x;
         this.y = y;
         this.imageN = ((x + y * 2) % 4 + 4) % 4;
@@ -24,7 +25,7 @@ class Tile {
         ctx.strokeRect(this.x, this.y, 1, 1);
     }
     drawCloudBackground(ctx) {
-        let a = 1 - Math.max(Math.min(1, this.discoverAnimation / 50), 0);
+        let a = 1 - Math.max(Math.min(1, this.discoverAnimation / 30), 0);
         ctx.save();
         ctx.translate(this.x + 0.5, this.y + 0.5);
         ctx.scale(1.4 * a, 1.4 * a);
@@ -32,11 +33,11 @@ class Tile {
         ctx.globalAlpha = a;
         ctx.imageSmoothingEnabled = false;
         ctx.fillStyle = "rgb(100,100,100)";
-        ctx.drawImage(Tile.cloudsImage, 25 * this.imageN, 50, 25, 25, -0.5, -0.5, 1, 1);
+        ctx.drawImage(this.environment.cloudsImage, 25 * this.imageN, 50, 25, 25, -0.5, -0.5, 1, 1);
         ctx.restore();
     }
     drawCloud(ctx) {
-        let a = 1 - Math.max(Math.min(1, this.discoverAnimation / 50), 0);
+        let a = 1 - Math.max(Math.min(1, this.discoverAnimation / 30), 0);
         ctx.save();
         ctx.translate(this.x + 0.5, this.y + 0.5);
         ctx.scale(1.4 * a, 1.4 * a);
@@ -44,7 +45,7 @@ class Tile {
         ctx.globalAlpha = a;
         ctx.imageSmoothingEnabled = false;
         ctx.fillStyle = "rgb(100,100,100)";
-        ctx.drawImage(Tile.cloudsImage, 25 * this.imageN, 0, 25, 25, -0.5, -0.5, 1, 1);
+        ctx.drawImage(this.environment.cloudsImage, 25 * this.imageN, 0, 25, 25, -0.5, -0.5, 1, 1);
         ctx.restore();
     }
 }

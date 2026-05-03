@@ -1,5 +1,5 @@
 class Player {
-    static MOVE_TIME = 25
+    static MOVE_TIME = 20
     constructor(game) {
         this.game = game;
         this.ctx = game.ctx;
