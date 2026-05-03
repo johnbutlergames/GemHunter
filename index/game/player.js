@@ -1,13 +1,26 @@
 class Player {
+    static MOVE_TIME = 40
     constructor(game) {
         this.game = game;
         this.ctx = game.ctx;
         this.x = 0;
         this.y = 0;
+        this.direction = { x: 1, y: 0 };
+
+        this.backImage = new Image();
+        this.backImage.src = "assets/hero-back.png";
+        this.frontImage = new Image();
+        this.frontImage.src = "assets/hero-front.png";
+
+        this.state = "idle";
     }
     update() {
-        this.updateKeyboardMovement();
-        this.updateMouseMovement();
+        if (this.state == "idle") {
+            this.updateKeyboardMovement();
+            this.updateMouseMovement();
+        } else if (this.state == "moving animation") {
+            this.updateMovingAnimation();
+        }
         this.updateTileDiscovery();
     }
     updateTileDiscovery() {
@@ -18,19 +31,23 @@ class Player {
     updateKeyboardMovement() {
         let oldX = this.x;
         let oldY = this.y;
-        if (Keys.down.a || Keys.down.ArrowLeft) {
+        if (Keys.keys.a || Keys.keys.ArrowLeft) {
             this.move({ x: -1, y: 0 });
         }
-        if (Keys.down.d || Keys.down.ArrowRight) {
+        if (Keys.keys.d || Keys.keys.ArrowRight) {
             this.move({ x: 1, y: 0 });
         }
-        if (Keys.down.w || Keys.down.ArrowUp) {
+        if (Keys.keys.w || Keys.keys.ArrowUp) {
             this.move({ x: 0, y: -1 });
         }
-        if (Keys.down.s || Keys.down.ArrowDown) {
+        if (Keys.keys.s || Keys.keys.ArrowDown) {
             this.move({ x: 0, y: 1 });
         }
-        if (oldX != this.x || oldY != this.y) Keys.down = {};
+        if (oldX != this.x || oldY != this.y) {
+            this.animateMove(oldX, oldY, this.x, this.y);
+            this.updateMovingAnimation();
+            Keys.down = {};
+        }
     }
     updateMouseMovement() {
         if (!this.game.mouse.click) return;
@@ -47,7 +64,11 @@ class Player {
         let oldX = this.x;
         let oldY = this.y;
 
-        if (oldX != this.x || oldY != this.y) this.game.mouse.click = false;
+        if (oldX != this.x || oldY != this.y) {
+            this.animateMove(oldX, oldY, this.x, this.y);
+            this.updateMovingAnimation();
+            this.game.mouse.click = false;
+        }
     }
     move(move) {
         let currentBiome = this.game.environmentManager.currentBiome;
@@ -57,9 +78,50 @@ class Player {
         this.x = Math.min(this.x, currentBiome.x + currentBiome.r - 1);
         this.y = Math.max(this.y, currentBiome.y - currentBiome.r);
         this.y = Math.min(this.y, currentBiome.y + currentBiome.r - 1);
+
+        this.direction = move;
+    }
+    animateMove(x1, y1, x2, y2) {
+        this.state = "moving animation";
+        this.movingAnimation = {
+            time: 0,
+            x1,
+            y1,
+            x2,
+            y2
+        };
+    }
+    updateMovingAnimation() {
+        this.movingAnimation.time++;
+        let a = this.movingAnimation.time / Player.MOVE_TIME;
+        this.x = this.movingAnimation.x1 * (1 - a) + this.movingAnimation.x2 * a;
+        this.y = this.movingAnimation.y1 * (1 - a) + this.movingAnimation.y2 * a;
+
+        if (this.movingAnimation.time == Player.MOVE_TIME) {
+            this.x = this.movingAnimation.x2;
+            this.y = this.movingAnimation.y2;
+            this.state = "idle";
+        }
     }
     draw() {
-        this.ctx.fillStyle = "blue";
-        this.ctx.fillRect(this.x, this.y, 1, 1);
+        let sprite;
+        if (this.direction.y == -1) {
+            sprite = this.backImage;
+        } else {
+            sprite = this.frontImage;
+        }
+        let flip = false;
+        if (this.direction.x == -1) flip = true;
+
+        let a = 0;
+        if (this.state == "moving animation") {
+            if (this.movingAnimation.time < Player.MOVE_TIME / 2) a = 1;
+        }
+
+        this.ctx.save();
+        ctx.translate(this.x + 0.5, this.y + 0.5);
+        if (flip) this.ctx.scale(-1, 1);
+        this.ctx.drawImage(sprite, a * 30, 0, 30, 30, -0.5, -0.5, 1, 1);
+        this.ctx.restore();
     }
 }
