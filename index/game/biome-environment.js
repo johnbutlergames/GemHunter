@@ -55,6 +55,17 @@ class BiomeEnvironment {
             ["#cccccc", "#bbbbbb", "#949494", "#878787", "#8f8f8f", "#adadad", "#7d7d7d", "#5f5f5f"]
         );
 
+        this.flowerImage = await recolorImage(
+            Tile.flowerImage,
+            ["#444444", "#5f5f5f", "#b0b0b0", "#767676"],
+            [colors[4], colors[5], colors[0], colors[1]]
+        );
+        this.deadFlowerImage = await recolorImage(
+            Tile.deadFlowerImage,
+            ["#444444", "#5f5f5f"],
+            ["#444444", "#5f5f5f"]
+        );
+
         let grassVariations = [0, 1, 2, 3];
         grassVariations.splice(Math.floor(Math.random() * grassVariations.length), 1);
         grassVariations.splice(Math.floor(Math.random() * grassVariations.length), 1);
@@ -63,7 +74,11 @@ class BiomeEnvironment {
             for (let y = biome.y - biome.r; y < biome.y + biome.r; y++) {
                 if (Math.random() < 0.4) {
                     let variation = Math.floor(Math.random() * 2);
-                    this.tiles.push(new Tile(this, x, y, colors[0], this.grassImage, this.deadGrassImage, grassVariations[variation]));
+                    if (Math.random() < 0.3) {
+                        this.tiles.push(new Tile(this, x, y, colors[0], this.flowerImage, this.deadFlowerImage, grassVariations[variation]));
+                    } else {
+                        this.tiles.push(new Tile(this, x, y, colors[0], this.grassImage, this.deadGrassImage, grassVariations[variation]));
+                    }
                 } else {
                     this.tiles.push(new Tile(this, x, y, colors[0]));
                 }
