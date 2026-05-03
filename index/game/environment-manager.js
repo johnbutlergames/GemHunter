@@ -13,6 +13,7 @@ class EnvironmentManager {
         this.currentBiome.initialize();
         this.currentBiome.environment.initializeTiles();
         this.leaveBiomeArrow = new LeaveBiomeArrow(this);
+        this.cachedBiomes = [];
     }
     get biomeNames() {
         let names = [];
@@ -70,23 +71,6 @@ class EnvironmentManager {
     }
     update(dt) {
         this.player.update();
-        if (this.game.mouse.click && !this.game.cam.justMoved) {
-            let cors = this.game.cam.screenToGlobal(this.game.mouse.x, this.game.mouse.y);
-            let dir = dirTo(this.player.x, this.player.y, cors.x, cors.y);
-            dir = Math.round(dir / 90) * 90;
-            let move = distToMove(1, dir);
-            move.x = Math.round(move.x);
-            move.y = Math.round(move.y);
-            let oldX = this.player.x;
-            let oldY = this.player.y;
-            this.player.x += move.x;
-            this.player.y += move.y;
-            this.player.x = Math.max(this.player.x, this.currentBiome.x - this.currentBiome.r);
-            this.player.x = Math.min(this.player.x, this.currentBiome.x + this.currentBiome.r - 1);
-            this.player.y = Math.max(this.player.y, this.currentBiome.y - this.currentBiome.r);
-            this.player.y = Math.min(this.player.y, this.currentBiome.y + this.currentBiome.r - 1);
-            if (oldX != this.player.x || oldY != this.player.y) this.game.mouse.click = false;
-        }
         this.leaveBiomeArrow.update();
         this.currentBiome.environment.discoverTiles(this.player.x, this.player.y);
     }

@@ -111,6 +111,8 @@ class Biome {
         await this.initializeDescription();
         await this.initializeImagePrompt();
         await this.initializeImage();
+
+        this.initialized = true;
     }
     initializeAttributes() {
         console.log("....initializing base attributes....");
@@ -271,6 +273,7 @@ class Biome {
         this.description = data;
     }
     async initializeImagePrompt() {
+        console.log("....initializing image prompt....");
         let prompt = [
             this.description,
             "",
