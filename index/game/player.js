@@ -1,5 +1,5 @@
 class Player {
-    static MOVE_TIME = 40
+    static MOVE_TIME = 25
     constructor(game) {
         this.game = game;
         this.ctx = game.ctx;
@@ -33,14 +33,11 @@ class Player {
         let oldY = this.y;
         if (Keys.keys.a || Keys.keys.ArrowLeft) {
             this.move({ x: -1, y: 0 });
-        }
-        if (Keys.keys.d || Keys.keys.ArrowRight) {
+        } else if (Keys.keys.d || Keys.keys.ArrowRight) {
             this.move({ x: 1, y: 0 });
-        }
-        if (Keys.keys.w || Keys.keys.ArrowUp) {
+        } else if (Keys.keys.w || Keys.keys.ArrowUp) {
             this.move({ x: 0, y: -1 });
-        }
-        if (Keys.keys.s || Keys.keys.ArrowDown) {
+        } else if (Keys.keys.s || Keys.keys.ArrowDown) {
             this.move({ x: 0, y: 1 });
         }
         if (oldX != this.x || oldY != this.y) {
@@ -50,7 +47,7 @@ class Player {
         }
     }
     updateMouseMovement() {
-        if (!this.game.mouse.click) return;
+        if (!this.game.mouse.down) return;
         if (this.game.cam.justMoved) return;
         let cors = this.game.cam.screenToGlobal(this.game.mouse.x, this.game.mouse.y);
         let dir = dirTo(this.x, this.y, cors.x, cors.y);
@@ -59,15 +56,14 @@ class Player {
         move.x = Math.round(move.x);
         move.y = Math.round(move.y);
 
-        this.move(move);
-
         let oldX = this.x;
         let oldY = this.y;
+
+        this.move(move);
 
         if (oldX != this.x || oldY != this.y) {
             this.animateMove(oldX, oldY, this.x, this.y);
             this.updateMovingAnimation();
-            this.game.mouse.click = false;
         }
     }
     move(move) {
@@ -119,6 +115,7 @@ class Player {
         }
 
         this.ctx.save();
+        this.ctx.imageSmoothingEnabled = false;
         ctx.translate(this.x + 0.5, this.y + 0.5);
         if (flip) this.ctx.scale(-1, 1);
         this.ctx.drawImage(sprite, a * 30, 0, 30, 30, -0.5, -0.5, 1, 1);

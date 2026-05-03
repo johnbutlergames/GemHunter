@@ -3,7 +3,7 @@ class Cam {
         this.game = game;
         this.x = 0;
         this.y = 0;
-        this.zoom = 50;
+        this.zoom = 70;
     }
     link(canvas, ctx, mouse) {
         this.canvas = canvas;
@@ -29,7 +29,7 @@ class Cam {
     }
     update(dt) {
         if (!this.game.environmentManager.player) return;
-        let follow = 0.01;
+        let follow = 0.03;
 
         let player = this.game.environmentManager.player;
         this.x = this.x * (1 - follow) - (player.x + 0.5) * follow;
