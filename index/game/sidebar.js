@@ -39,5 +39,30 @@ class SideBar {
             this.ctx.fillText(name, 0, 0);
             this.ctx.restore();
         }
+
+        let biomes = this.game.environmentManager.biomes;
+        let x1 = Math.min(...biomes.map(e => e.x - e.r));
+        let y1 = Math.min(...biomes.map(e => e.y - e.r));
+        let x2 = Math.max(...biomes.map(e => e.x + e.r));
+        let y2 = Math.max(...biomes.map(e => e.y + e.r));
+        let w = x2 - x1;
+        let h = y2 - y1;
+        this.ctx.save();
+        this.ctx.translate(this.width / 2 - (x1 + w / 2) * 5, 450 - (y1 + h / 2) * 5);
+        for (let biome of biomes) {
+            this.ctx.strokeStyle = "black";
+            this.ctx.lineWidth = 1;
+            this.ctx.save();
+            this.ctx.scale(5, 5);
+            this.ctx.translate(biome.x * 1.2, biome.y * 1.2);
+            this.ctx.strokeRect(-biome.r, -biome.r, biome.r * 2, biome.r * 2);
+            if (biome.environment?.gem && !biome.environment.gem.collected) {
+                this.ctx.scale(7, 7);
+                this.ctx.imageSmoothingEnabled = false;
+                biome.environment.gem.drawSprite(this.ctx);
+            }
+            this.ctx.restore();
+        }
+        this.ctx.restore();
     }
 }
