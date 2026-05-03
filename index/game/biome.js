@@ -9,8 +9,7 @@ const BIOME_WEATHERS = [
     { value: "intensly sunny", weight: 0.1 },
     { value: "overcast", weight: 1 },
     { value: "cloudy", weight: 1 },
-    { value: "foggy", weight: 1 },
-    { value: "alien", weight: 0.1 }
+    { value: "foggy", weight: 1 }
 ];
 const BIOME_TEMPERATURES = [
     { value: "freezing cold", weight: 0.05 },
@@ -31,7 +30,6 @@ const BIOME_FLORA_TYPES = [
     { value: "mosses", weight: 0.7 },
     { value: "mushrooms", weight: 0.7 },
     { value: "herbs", weight: 0.5 },
-    { value: "fungi", weight: 0.5 },
     { value: "succulents", weight: 0.5 },
     { value: "spices", weight: 0.5 },
 ];
@@ -42,21 +40,12 @@ const BIOME_FLORA_ATTRIBUTES = [
     { value: "aquatic", weight: 1 },
     { value: "twisting", weight: 1 },
     { value: "thorny", weight: 0.7 },
-    { value: "nocturnal", weight: 0.5 },
     { value: "blooming", weight: 0.5 },
     { value: "giant", weight: 0.5 },
     { value: "vibrant", weight: 0.5 },
-    { value: "hardy", weight: 0.5 },
     { value: "bioluminescent", weight: 0.5 },
     { value: "floating", weight: 0.3 },
-    { value: "poisinous", weight: 0.3 },
-    { value: "fire resistant", weight: 0.3 },
-    { value: "medicinal", weight: 0.3 },
-    { value: "bloated", weight: 0.3 },
-    { value: "carnivorous", weight: 0.2 },
-    { value: "sticky", weight: 0.2 },
-    { value: "water storing", weight: 0.2 },
-    { value: "parasitic", weight: 0.1 }
+    { value: "poisinous", weight: 0.3 }
 ];
 const BIOME_DIFFICULTIES = [
     { value: "deadly", weight: 0.05 },

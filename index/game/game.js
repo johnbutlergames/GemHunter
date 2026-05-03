@@ -6,10 +6,23 @@ class Game {
         this.cam = new Cam();
         this.cam.link(canvas, ctx, mouse);
         this.environmentManager = new EnvironmentManager(this);
+
+        this.state = "idle";
     }
     update(dt) {
+        if (this.state == "idle") this.updateIdleState();
+        if (this.state == "loading biome") this.updateLoadingBiomeState();
+        if (this.state == "biome transition") this.updateBiomeTransitionState();
+    }
+    updateIdleState(dt) {
         this.cam.update(dt);
         this.environmentManager.update(dt);
+    }
+    updateLoadingBiomeState(dt) {
+
+    }
+    updateBiomeTransitionState(dt) {
+
     }
     draw(dt) {
         this.ctx.save();
