@@ -74,12 +74,13 @@ const BIOME_STRUCTURES = ["Refinery", "Vault", "Monolith", "Castle", "Obelisk", 
 
 class Biome {
     static SKIP_INITIALIZATION = true;
-    constructor(x, y, r, spawn) {
+    constructor(x, y, r, spawn, id) {
         this.x = x;
         this.y = y;
         this.r = r;
         this.spawn = spawn;
         this.environment = new BiomeEnvironment(this);
+        this.id = id;
 
         this.readyToInitializeTiles = false;
 

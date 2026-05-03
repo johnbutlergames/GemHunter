@@ -7,6 +7,8 @@ class Player {
         this.y = 0;
         this.direction = { x: 1, y: 0 };
 
+        this.gemsCollected = [];
+
         this.backImage = new Image();
         this.backImage.src = "assets/hero-back.png";
         this.frontImage = new Image();
