@@ -2,6 +2,10 @@ class Tile {
     static {
         this.cloudsImage = new Image();
         this.cloudsImage.src = "assets/clouds-25-25v2.png";
+        this.grassImage = new Image();
+        this.grassImage.src = "assets/grass-25-25.png";
+        this.deadGrassImage = new Image();
+        this.deadGrassImage.src = "assets/grass-dead-25-25.png";
     }
     constructor(environment, x, y, image, variation) {
         this.environment = environment;
@@ -15,8 +19,8 @@ class Tile {
         this.variation = variation;
         this.flip = Math.floor(Math.random() * 2);
         this.size = 0.7 + Math.floor(Math.random() * 2) * 0.3;
-        this.xOffset = Math.random() * 0.4 - 0.2;
-        this.yOffset = Math.random() * 0.4 - 0.2;
+        this.xOffset = Math.random() * 0.2 - 0.1;
+        this.yOffset = Math.random() * 0.2 - 0.1;
         this.noise = noise(this.x * 2 + Math.random() * 0.1, this.y * 2 + Math.random() * 0.1, 500);
     }
     update(dt) {
