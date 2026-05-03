@@ -112,6 +112,7 @@ class Biome {
         await this.initializeImagePrompt();
         await this.initializeImage();
 
+        console.log("----BIOME INITIALIZATION COMPLETE----")
         this.initialized = true;
     }
     initializeAttributes() {

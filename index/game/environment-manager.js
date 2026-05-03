@@ -13,7 +13,7 @@ class EnvironmentManager {
         this.currentBiome.initialize();
         this.currentBiome.environment.initializeTiles();
         this.leaveBiomeArrow = new LeaveBiomeArrow(this);
-        this.cachedBiomes = [];
+        this.biomeCache = [];
     }
     get biomeNames() {
         let names = [];
@@ -21,6 +21,9 @@ class EnvironmentManager {
             if (biome.name) names.push(biome.name);
         }
         return names;
+    }
+    allBiomesInitialized() {
+        return this.biomes.every(e => e.initialized);
     }
     leaveBiome(direction) {
         this.player.x += direction.x;
@@ -46,11 +49,19 @@ class EnvironmentManager {
         let { x, y } = this.getNewBiomeCoordinates(current, direction);
         let oppositeDirection = this.reverseDirection(direction);
 
-        let biome = new Biome(x, y, EnvironmentManager.BIOME_SIZE / 2, false);
-        biome.environment.initializeTiles();
-        biome.initialize();
+        let biome;
+        if (this.biomeCache.length) {
+            biome = this.biomeCache.pop();
+            biome.x = x;
+            biome.y = y;
+            biome.environment.initializeTiles();
+        } else {
+            biome = new Biome(x, y, EnvironmentManager.BIOME_SIZE / 2, false);
+            biome.initialize();
+            biome.environment.initializeTiles();
+        }
         this.biomes.push(biome);
-        // add biome
+        // add biome from cache if available, otherwise create new
 
         current.neighboringBiomes.push({ direction, biome });
         biome.neighboringBiomes.push({ direction: oppositeDirection, biome: current });
@@ -72,7 +83,14 @@ class EnvironmentManager {
     update(dt) {
         this.player.update();
         this.leaveBiomeArrow.update();
-        this.currentBiome.environment.discoverTiles(this.player.x, this.player.y);
+        this.updateBiomeCache();
+    }
+    updateBiomeCache() {
+        if (!this.allBiomesInitialized()) return;
+        if (this.biomeCache.length) return;
+        let biome = new Biome(null, null, EnvironmentManager.BIOME_SIZE / 2, false);
+        biome.initialize();
+        this.biomeCache.push(biome);
     }
     draw(dt) {
         for (let biome of this.biomes) {
@@ -82,7 +100,7 @@ class EnvironmentManager {
             } else {
                 this.ctx.globalAlpha = 1;
             }
-            if(biome.image) {
+            if (biome.image) {
                 this.ctx.drawImage(biome.image, biome.x - biome.r, biome.y - biome.r, biome.r * 2, biome.r * 2);
             }
             if (biome.environment.tiles) {
