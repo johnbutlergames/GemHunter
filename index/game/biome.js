@@ -59,7 +59,7 @@ const BIOME_CIVILIZATIONS = [
     { value: "ancient", weight: 0.5 },
     { value: "none", weight: 0.5 },
     { value: "on the brink of collapse", weight: 1 },
-    { value: "flourishinh", weight: 1 },
+    { value: "flourishing", weight: 1 },
     { value: "thriving", weight: 1 },
 ];
 const PRIMARY_STRUCTURE_NAME_CREATIVITY = [
