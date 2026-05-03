@@ -139,7 +139,7 @@ class Game {
             this.ctx.restore();
             this.ctx.save();
             this.ctx.globalAlpha = gradientAnimation;
-            let grd = this.ctx.createRadialGradient(0, 0, 0, 0, 0, imageSize * 0.5 * (imageTransition * 0.5 + 0.5));
+            let grd = this.ctx.createRadialGradient(0, 0, 0, 0, 0, imageSize * 0.7 * (imageTransition * 0.5 + 0.5));
             grd.addColorStop(0, "rgba(0,0,0,0)");
             grd.addColorStop(1, "rgba(0,0,0,1)");
             this.ctx.fillStyle = grd;

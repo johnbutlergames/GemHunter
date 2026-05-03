@@ -82,10 +82,17 @@ class Biome {
 
         this.neighboringBiomes = [];
     }
+    initializeExits() {
+        this.exits = [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: 1 }, { x: 0, y: -1 }];
+        this.exits = this.exits.filter(e => {
+            if (e.x * this.r * 2 + this.x == 0 && e.y * this.r * 2 + this.y > 0) return false;
+            return true;
+        });
+        // remove exits that would conflict in the sea line from spawn
+    }
     async initialize() {
         console.log("----INITIALIZING BIOME----");
         this.initializeAttributes();
-        this.initializeExits();
         //await this.initializeName();
         //await this.initializeMood();
         //await this.initializeDescription();
@@ -97,16 +104,6 @@ class Biome {
 
         console.log("----BIOME INITIALIZATION COMPLETE----")
         this.initialized = true;
-    }
-    initializeExits() {
-        console.log("....initializing exits....");
-        this.exits = [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: 1 }, { x: 0, y: -1 }];
-        this.exits = this.exits.filter(e => {
-            console.log(e.x * this.r * 2 + this.x, e.y * this.r * 2 + this.y)
-            if (e.x * this.r * 2 + this.x == 0 && e.y * this.r * 2 + this.y > 0) return false;
-            return true;
-        });
-        // remove exits that would conflict in the sea line from spawn
     }
     initializeAttributes() {
         console.log("....initializing base attributes....");

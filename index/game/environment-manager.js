@@ -12,6 +12,7 @@ class EnvironmentManager {
         this.biomes.push(new Biome(0, 0, EnvironmentManager.BIOME_SIZE / 2, true));
         this.currentBiome = this.biomes[0];
         this.currentBiome.initialize();
+        this.currentBiome.initializeExits();
         this.targetBiome = null;
         this.leaveBiomeDirection = null;
         this.currentBiome.environment.initializeTiles();
@@ -83,6 +84,7 @@ class EnvironmentManager {
             biome.initialize();
             biome.environment.initializeTiles();
         }
+        biome.initializeExits();
         this.biomes.push(biome);
         // add biome from cache if available, otherwise create new
 
