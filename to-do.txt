@@ -12,8 +12,9 @@ concept art
 - animals
 - npcs
 - buildings
+- font/subfont
 
-character sprite, gem sprite, arrow, font/subfont
+DONE - character sprite, gem sprite, arrow, 
 
 find better prompts for image generation
 make gemini smart
