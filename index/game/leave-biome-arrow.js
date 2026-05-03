@@ -48,8 +48,8 @@ class LeaveBiomeArrow {
         if (!this.playerCanLeaveBiome()) return null;
         let direction = this.getPlayerExitDirection();
         return {
-            x: this.player.x + 0.5 + direction.x * 4 - 2,
-            y: this.player.y + 0.5 + direction.y * 4 - 2,
+            x: this.player.x + 0.5 + direction.x * 2 - 2,
+            y: this.player.y + 0.5 + direction.y * 2 - 2,
             w: 4,
             h: 4
         }

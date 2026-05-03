@@ -1,9 +1,9 @@
 class Cam {
-    constructor() {
+    constructor(game) {
+        this.game = game;
         this.x = 0;
         this.y = 0;
-        this.zoom = 10;
-        this.movingOrigin = null;
+        this.zoom = 50;
     }
     link(canvas, ctx, mouse) {
         this.canvas = canvas;
@@ -11,13 +11,13 @@ class Cam {
         this.mouse = mouse;
     }
     alignViewport() {
-        this.ctx.translate(this.canvas.width / 2, this.canvas.height / 2);
+        this.ctx.translate(this.canvas.width / 2 + this.game.sideBar.width / 2, this.canvas.height / 2);
         this.ctx.scale(this.zoom, this.zoom);
         this.ctx.translate(this.x, this.y);
     }
     screenToGlobal(x, y) {
         return {
-            x: (x - this.canvas.width / 2) / this.zoom - this.x,
+            x: (x - this.canvas.width / 2 - this.game.sideBar.width / 2) / this.zoom - this.x,
             y: (y - this.canvas.height / 2) / this.zoom - this.y
         };
     }
@@ -26,6 +26,21 @@ class Cam {
             x: (x + this.x) * this.zoom + this.canvas.width / 2,
             y: (y + this.y) * this.zoom + this.canvas.height / 2
         };
+    }
+    update(dt) {
+        if (!this.game.environmentManager.player) return;
+        let follow = 0.01;
+
+        let player = this.game.environmentManager.player;
+        this.x = this.x * (1 - follow) - (player.x + 0.5) * follow;
+        this.y = this.y * (1 - follow) - (player.y + 0.5) * follow;
+    }
+}
+
+class MapCam extends Cam {
+    constructor(game) {
+        super(game);
+        this.movingOrigin = null;
     }
     update(dt) {
         this.updateScroll(dt);
@@ -62,12 +77,5 @@ class Cam {
         } else {
             this.justMoved = false;
         }
-    }
-    getViewport() {
-        let x1 = (-this.canvas.width / 2) / this.zoom - this.x;
-        let y1 = (-this.canvas.height / 2) / this.zoom - this.y;
-        let x2 = (this.canvas.width / 2) / this.zoom - this.x;
-        let y2 = (this.canvas.height / 2) / this.zoom - this.y;
-        return { x: x1, y: y1, w: x2 - x1, h: y2 - y1, x1: x1, y1: y1, x2: x2, y2: y2 };
     }
 }

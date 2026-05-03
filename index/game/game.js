@@ -3,16 +3,20 @@ class Game {
         this.canvas = canvas;
         this.ctx = ctx;
         this.mouse = mouse;
-        this.cam = new Cam();
+        this.cam = new Cam(this);
         this.cam.link(canvas, ctx, mouse);
         this.environmentManager = new EnvironmentManager(this);
         this.sideBar = new SideBar(this);
+
+        this.cam.x = -this.environmentManager.player.x - 0.5;
+        this.cam.y = -this.environmentManager.player.y - 0.5;
 
         this.state = "idle";
         this.biomeTransition = null;
         this.loadingBiome = null;
     }
     update(dt) {
+        this.cam.update(dt);
         if (this.state == "idle") this.updateIdleState(dt);
         if (this.state == "start biome load") this.startBiomeLoad(dt);
         if (this.state == "loading biome") this.updateLoadingBiomeState(dt);
@@ -22,7 +26,6 @@ class Game {
         if (this.state == "biome short transition") this.updateBiomeTransitionState(dt);
     }
     updateIdleState(dt) {
-        this.cam.update(dt);
         this.environmentManager.update(dt);
     }
     startBiomeLoad(dt) {
