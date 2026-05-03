@@ -80,29 +80,33 @@ class Biome {
         this.spawn = spawn;
         this.environment = new BiomeEnvironment(this);
 
-        this.exits = [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: 1 }, { x: 0, y: -1 }];
-        if (this.spawn) {
-            this.exits = [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: -1 }];
-            // spawn cannot be exited from bottom (that's where you came from)
-        }
-        this.exits = this.exits.filter(e => {
-            if (e.x * this.r * 2 + this.x == 0 && e.y * this.r * 2 + this.y > 0) return false;
-            return true;
-        });
-        // remove exits that would conflict in the sea line from spawn
         this.neighboringBiomes = [];
     }
     async initialize() {
         console.log("----INITIALIZING BIOME----");
         this.initializeAttributes();
-        await this.initializeName();
-        await this.initializeMood();
-        await this.initializeDescription();
-        await this.initializeImagePrompt();
-        await this.initializeImage();
+        this.initializeExits();
+        //await this.initializeName();
+        //await this.initializeMood();
+        //await this.initializeDescription();
+        //await this.initializeImagePrompt();
+        //await this.initializeImage();
+        this.name = "Mistwood";
+        this.image = new Image();
+        this.image.src = "assets/mistwood.jpg";
 
         console.log("----BIOME INITIALIZATION COMPLETE----")
         this.initialized = true;
+    }
+    initializeExits() {
+        console.log("....initializing exits....");
+        this.exits = [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: 1 }, { x: 0, y: -1 }];
+        this.exits = this.exits.filter(e => {
+            console.log(e.x * this.r * 2 + this.x, e.y * this.r * 2 + this.y)
+            if (e.x * this.r * 2 + this.x == 0 && e.y * this.r * 2 + this.y > 0) return false;
+            return true;
+        });
+        // remove exits that would conflict in the sea line from spawn
     }
     initializeAttributes() {
         console.log("....initializing base attributes....");

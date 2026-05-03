@@ -1,5 +1,6 @@
 class EnvironmentManager {
-    static BIOME_SIZE = 12
+    static BIOME_SIZE = 4
+    static SKIP_BIOME_ANIMATION = true
     constructor(game) {
         this.game = game;
         this.ctx = game.ctx;
@@ -11,6 +12,8 @@ class EnvironmentManager {
         this.biomes.push(new Biome(0, 0, EnvironmentManager.BIOME_SIZE / 2, true));
         this.currentBiome = this.biomes[0];
         this.currentBiome.initialize();
+        this.targetBiome = null;
+        this.leaveBiomeDirection = null;
         this.currentBiome.environment.initializeTiles();
         this.leaveBiomeArrow = new LeaveBiomeArrow(this);
         this.biomeCache = [];
@@ -26,16 +29,36 @@ class EnvironmentManager {
         return this.biomes.every(e => e.initialized);
     }
     leaveBiome(direction) {
-        this.player.x += direction.x;
-        this.player.y += direction.y;
+        this.leaveBiomeDirection = direction;
         let neighbor = this.currentBiome.neighboringBiomes.find(e => e.direction.x == direction.x && e.direction.y == direction.y);
         if (neighbor) {
-            this.currentBiome = neighbor.biome;
+            this.targetBiome = neighbor.biome;
+        } else {
+            let oppositeDirection = { x: -direction.x, y: -direction.y };
+            this.targetBiome = this.createBiome(direction, this.currentBiome);
+        }
+
+        if (EnvironmentManager.SKIP_BIOME_ANIMATION) {
+            this.switchBiome();
             return;
         }
 
-        let oppositeDirection = { x: -direction.x, y: -direction.y };
-        this.currentBiome = this.createBiome(direction, this.currentBiome);
+        if (this.targetBiome.initialized) {
+            if (this.targetBiome.visited) {
+                this.game.state = "start biome short transition";
+            } else {
+                this.game.state = "start biome transition";
+            }
+        } else {
+            this.game.state = "start biome load";
+        }
+    }
+    switchBiome() {
+        this.currentBiome = this.targetBiome;
+        this.targetBiome = null;
+        let direction = this.leaveBiomeDirection;
+        this.player.x += direction.x;
+        this.player.y += direction.y;
     }
     getNewBiomeCoordinates(biome, direction) {
         let x = biome.x + EnvironmentManager.BIOME_SIZE * direction.x;
@@ -84,6 +107,8 @@ class EnvironmentManager {
         this.player.update();
         this.leaveBiomeArrow.update();
         this.updateBiomeCache();
+
+        this.currentBiome.visited = true;
     }
     updateBiomeCache() {
         if (!this.allBiomesInitialized()) return;
