@@ -98,9 +98,9 @@ class Biome {
         await this.initializeDescription();
         await this.initializeImagePrompt();
         await this.initializeImage();
-        this.name = "Mistwood";
-        this.image = new Image();
-        this.image.src = "assets/mistwood.jpg";
+        //this.name = "Mistwood";
+        //this.image = new Image();
+        //this.image.src = "assets/mistwood.jpg";
 
         console.log("----BIOME INITIALIZATION COMPLETE----")
         this.initialized = true;
