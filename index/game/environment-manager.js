@@ -44,14 +44,10 @@ class EnvironmentManager {
             return;
         }
 
-        if (this.targetBiome.initialized) {
-            if (this.targetBiome.visited) {
-                this.game.state = "start biome short transition";
-            } else {
-                this.game.state = "start biome transition";
-            }
+        if (this.targetBiome.visited) {
+            this.game.state = "start biome short transition";
         } else {
-            this.game.state = "start biome load";
+            this.game.state = "start biome transition";
         }
     }
     switchBiome() {
@@ -59,6 +55,7 @@ class EnvironmentManager {
         let direction = this.leaveBiomeDirection;
         this.player.x += direction.x;
         this.player.y += direction.y;
+        this.player.state = "idle";
     }
     getNewBiomeCoordinates(biome, direction) {
         let x = biome.x + EnvironmentManager.BIOME_SIZE * direction.x;
@@ -73,7 +70,7 @@ class EnvironmentManager {
         let oppositeDirection = this.reverseDirection(direction);
 
         let biome;
-        if (this.biomeCache.length) {
+        if (this.biomeCache.length && false) {
             biome = this.biomeCache.pop();
             biome.x = x;
             biome.y = y;
@@ -109,9 +106,17 @@ class EnvironmentManager {
         this.leaveBiomeArrow.update();
         this.updateBiomeCache();
 
+        for (let tile of this.currentBiome.environment.tiles) {
+            tile.update();
+        }
+
         this.currentBiome.visited = true;
     }
     updateBiomeCache() {
+        if (this.biomes.length >= 5) {
+            this.biomeCache = [];
+            return;
+        }
         if (!this.allBiomesInitialized()) return;
         if (this.biomeCache.length) return;
         let biome = new Biome(null, null, EnvironmentManager.BIOME_SIZE / 2, false);
@@ -119,27 +124,31 @@ class EnvironmentManager {
         this.biomeCache.push(biome);
     }
     draw(dt) {
-        for (let biome of this.biomes) {
-            this.ctx.save();
-            if (biome != this.currentBiome) {
-                this.ctx.globalAlpha = 0.5;
-            } else {
-                this.ctx.globalAlpha = 1;
-            }
-            if (biome.environment.tiles) {
-                for (let tile of biome.environment.tiles) {
-                    if (!tile.discovered) continue;
-                    this.ctx.strokeStyle = "rgb(0,0,0)";
-                    this.ctx.lineWidth = 0.1;
-                    this.ctx.strokeRect(tile.x, tile.y, 1, 1);
-                }
-            }
-            this.ctx.strokeStyle = "black";
-            this.ctx.lineWidth = 0.1;
-            this.ctx.strokeRect(biome.x - biome.r, biome.y - biome.r, biome.r * 2, biome.r * 2);
-
-            this.ctx.restore();
+        let biome = this.currentBiome;
+        this.ctx.save();
+        if (biome != this.currentBiome) {
+            this.ctx.globalAlpha = 0.5;
+        } else {
+            this.ctx.globalAlpha = 1;
         }
+        if (biome.environment.tiles) {
+            for (let tile of biome.environment.tiles) {
+                this.ctx.fillStyle = "white";
+                this.ctx.fillRect(tile.x, tile.y, 1, 1);
+                this.ctx.strokeStyle = "rgba(0,0,0,0.1)";
+                this.ctx.lineWidth = 0.05;
+                this.ctx.strokeRect(tile.x, tile.y, 1, 1);
+
+                let a = 1 - Math.max(Math.min(1, tile.discoverAnimation / 50), 0);
+                this.ctx.save();
+                this.ctx.globalAlpha = a;
+                this.ctx.fillStyle = "rgb(100,100,100)";
+                this.ctx.fillRect(tile.x, tile.y, 1, 1);
+                this.ctx.restore();
+            }
+        }
+
+        this.ctx.restore();
 
         this.player.draw();
         this.leaveBiomeArrow.draw();

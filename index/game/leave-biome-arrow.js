@@ -70,7 +70,11 @@ class LeaveBiomeArrow {
     }
     playerCanLeaveBiome() {
         let direction = this.getPlayerExitDirection();
-        return this.currentBiome.exits.some(e => e.x == direction.x && e.y == direction.y);
+        if (!this.currentBiome.exits.some(e => e.x == direction.x && e.y == direction.y)) return false;
+        if (this.currentBiome.neighboringBiomes.some(e => e.direction.x == direction.x && e.direction.y == direction.y)) return true;
+        if (!this.environmentManager.biomeCache.length) return false;
+        if (!this.environmentManager.biomeCache[0].initialized) return false;
+        return true;
     }
     draw() {
         if (!this.playerOnBiomeEdge()) return;

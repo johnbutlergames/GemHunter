@@ -18,8 +18,6 @@ class Game {
     update(dt) {
         this.cam.update(dt);
         if (this.state == "idle") this.updateIdleState(dt);
-        if (this.state == "start biome load") this.startBiomeLoad(dt);
-        if (this.state == "loading biome") this.updateLoadingBiomeState(dt);
         if (this.state == "start biome transition") this.startBiomeTransition(dt);
         if (this.state == "biome transition") this.updateBiomeTransitionState(dt);
         if (this.state == "start biome short transition") this.startBiomeShortTransition(dt);
@@ -27,22 +25,6 @@ class Game {
     }
     updateIdleState(dt) {
         this.environmentManager.update(dt);
-    }
-    startBiomeLoad(dt) {
-        this.state = "loading biome";
-        this.loadingBiome = {
-            animation: 0
-        };
-    }
-    updateLoadingBiomeState(dt) {
-        this.loadingBiome.animation++;
-        if (this.environmentManager.targetBiome.initialized) {
-            if (this.environmentManager.targetBiome.visited) {
-                this.startBiomeShortTransition();
-            } else {
-                this.startBiomeTransition();
-            }
-        }
     }
     startBiomeTransition(dt) {
         this.state = "biome transition";
