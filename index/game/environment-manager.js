@@ -71,15 +71,15 @@ class EnvironmentManager {
         let oppositeDirection = this.reverseDirection(direction);
 
         let biome;
-        if (this.biomeCache.length && false) {
+        if (this.biomeCache.length) {
             biome = this.biomeCache.pop();
             biome.x = x;
             biome.y = y;
-            biome.environment.initializeTiles();
+            biome.initializeTiles();
         } else {
             biome = new Biome(x, y, EnvironmentManager.BIOME_SIZE / 2, false);
             biome.initialize();
-            biome.environment.initializeTiles();
+            biome.initializeTiles();
         }
         biome.initializeExits();
         this.biomes.push(biome);
@@ -119,7 +119,8 @@ class EnvironmentManager {
             return;
         }
         if (!this.allBiomesInitialized()) return;
-        if (this.biomeCache.length) return;
+        if (this.biomeCache.length && !this.biomeCache[this.biomeCache.length - 1].initialized) return;
+        if (this.biomeCache.length + this.biomes.length >= 5) return;
         let biome = new Biome(null, null, EnvironmentManager.BIOME_SIZE / 2, false);
         biome.initialize();
         this.biomeCache.push(biome);
