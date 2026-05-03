@@ -139,10 +139,13 @@ class Game {
         if (this.environmentManager.targetBiome.name) {
             this.ctx.save();
             this.ctx.globalAlpha = titleTransition;
-            this.ctx.fillStyle = "white";
-            this.ctx.font = "bold 100px Times New Roman";
             this.ctx.textAlign = "center";
             this.ctx.textBaseline = "middle";
+            this.ctx.fillStyle = "black";
+            this.ctx.font = "bold 100px title";
+            this.ctx.fillText(this.environmentManager.targetBiome.name, 0, 0);
+            this.ctx.fillStyle = "white";
+            this.ctx.font = "100px title";
             this.ctx.fillText(this.environmentManager.targetBiome.name, 0, 0);
             this.ctx.restore();
         }
