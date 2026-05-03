@@ -1,5 +1,10 @@
 class LeaveBiomeArrow {
+    static {
+        this.image = new Image();
+        this.image.src = "assets/arrows-25-25.png"
+    }
     constructor(environmentManager) {
+        this.leaveAnimation = 0;
         this.environmentManager = environmentManager;
         this.game = environmentManager.game;
         this.ctx = this.game.ctx;
@@ -8,6 +13,7 @@ class LeaveBiomeArrow {
         this.player = this.environmentManager.player;
     }
     update() {
+        this.leaveAnimation++;
         this.currentBiome = this.environmentManager.currentBiome;
         if (!this.playerOnBiomeEdge()) return;
         if (!this.playerCanLeaveBiome()) return;
@@ -48,11 +54,14 @@ class LeaveBiomeArrow {
         if (!this.playerCanLeaveBiome()) return null;
         let direction = this.getPlayerExitDirection();
         return {
-            x: this.player.x + 0.5 + direction.x * 2 - 2,
-            y: this.player.y + 0.5 + direction.y * 2 - 2,
+            x: this.player.x + 0.5 + direction.x * (1.5 + this.animation * 0.1) - 2,
+            y: this.player.y + 0.5 + direction.y * (1.5 + this.animation * 0.1) - 2,
             w: 4,
             h: 4
         }
+    }
+    get animation() {
+        return Math.round(Math.sin(this.leaveAnimation / 10));
     }
     playerOnBiomeEdge() {
         if (this.player.x == this.currentBiome.x - this.currentBiome.r) return true;
@@ -68,6 +77,11 @@ class LeaveBiomeArrow {
         if (this.player.y == this.currentBiome.y + this.currentBiome.r - 1) return { x: 0, y: 1 };
         return null;
     }
+    playerFacingAwayFromEdge() {
+        let direction = this.getPlayerExitDirection();
+        if (this.player.realDirection.x == -direction.x && this.player.realDirection.y == -direction.y) return true;
+        return false;
+    }
     playerCanLeaveBiome() {
         let direction = this.getPlayerExitDirection();
         if (!this.currentBiome.exits.some(e => e.x == direction.x && e.y == direction.y)) return false;
@@ -79,15 +93,22 @@ class LeaveBiomeArrow {
     draw() {
         if (!this.playerOnBiomeEdge()) return;
         if (!this.playerCanLeaveBiome()) return;
+        if (this.playerFacingAwayFromEdge()) return;
         let direction = this.getPlayerExitDirection();
         let angle = dirTo(0, 0, direction.x, direction.y);
-        this.ctx.fillStyle = "green";
         let hitbox = this.hitbox;
         this.ctx.save();
         this.ctx.translate(hitbox.x + hitbox.w / 2, hitbox.y + hitbox.h / 2);
-        this.ctx.rotate(angle * Math.PI / 180);
-        this.ctx.fillRect(-0.5, -0.5, 1, 1);
-        this.ctx.fillRect(-1, -2.5, 2, 2);
+        this.ctx.imageSmoothingEnabled = false;
+        if (angle == 0) {
+            this.ctx.drawImage(LeaveBiomeArrow.image, 0, 0, 25, 25, -0.5, -0.5, 1, 1);
+        } else if (angle == 90) {
+            this.ctx.drawImage(LeaveBiomeArrow.image, 75, 0, 25, 25, -0.5, -0.5, 1, 1);
+        } else if (angle == 180) {
+            this.ctx.drawImage(LeaveBiomeArrow.image, 50, 0, 25, 25, -0.5, -0.5, 1, 1);
+        } else if (angle == 270) {
+            this.ctx.drawImage(LeaveBiomeArrow.image, 25, 0, 25, 25, -0.5, -0.5, 1, 1);
+        }
         this.ctx.restore();
     }
 }

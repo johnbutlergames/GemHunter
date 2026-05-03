@@ -79,6 +79,7 @@ class Player {
 
         this.direction.y = move.y;
         if (move.x) this.direction.x = move.x;
+        this.realDirection = move;
     }
     animateMove(x1, y1, x2, y2) {
         this.state = "moving animation";
