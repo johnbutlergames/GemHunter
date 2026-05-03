@@ -11,6 +11,10 @@ class LeaveBiomeArrow {
         this.currentBiome = this.environmentManager.currentBiome;
         if (!this.playerOnBiomeEdge()) return;
         if (!this.playerCanLeaveBiome()) return;
+        this.updateMouseMovement();
+        this.updateKeyboardMovement();
+    }
+    updateMouseMovement() {
         if (!this.mouse.click) return;
         if (this.game.cam.justMoved) return;
         let cors = this.game.cam.screenToGlobal(this.mouse.x, this.mouse.y);
@@ -19,6 +23,25 @@ class LeaveBiomeArrow {
         if (cors.x > this.hitbox.x + this.hitbox.w) return;
         if (cors.y > this.hitbox.y + this.hitbox.h) return;
         this.environmentManager.leaveBiome(this.getPlayerExitDirection());
+    }
+    updateKeyboardMovement() {
+        let move;
+        if (Keys.down.a || Keys.down.ArrowLeft) {
+            move = { x: -1, y: 0 };
+        }
+        if (Keys.down.d || Keys.down.ArrowRight) {
+            move = { x: 1, y: 0 };
+        }
+        if (Keys.down.w || Keys.down.ArrowUp) {
+            move = { x: 0, y: -1 };
+        }
+        if (Keys.down.s || Keys.down.ArrowDown) {
+            move = { x: 0, y: 1 };
+        }
+        let direction = this.getPlayerExitDirection();
+        if (move && direction.x == move.x && direction.y == move.y) {
+            this.environmentManager.leaveBiome(direction);
+        }
     }
     get hitbox() {
         if (!this.playerOnBiomeEdge()) return null;
