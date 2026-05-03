@@ -129,7 +129,7 @@ class Game {
         let titleTransition = easeInOut((this.biomeTransition.animation - 300) / 200) * (1 - easeInOut((this.biomeTransition.animation - 700) / 200));
         this.ctx.save();
         this.ctx.translate(this.canvas.width / 2, this.canvas.height / 2);
-        let image = this.environmentManager.currentBiome.image;
+        let image = this.environmentManager.targetBiome.image;
         if (image) {
             this.ctx.save();
             this.ctx.globalAlpha = imageTransition;
@@ -145,14 +145,14 @@ class Game {
             this.ctx.fillRect(-imageSize / 2 - 2, -imageSize / 2 - 2, imageSize + 4, imageSize + 4);
             this.ctx.restore();
         }
-        if (this.environmentManager.currentBiome.name) {
+        if (this.environmentManager.targetBiome.name) {
             this.ctx.save();
             this.ctx.globalAlpha = titleTransition;
             this.ctx.fillStyle = "white";
             this.ctx.font = "bold 100px Times New Roman";
             this.ctx.textAlign = "center";
             this.ctx.textBaseline = "middle";
-            this.ctx.fillText(this.environmentManager.currentBiome.name, 0, 0);
+            this.ctx.fillText(this.environmentManager.targetBiome.name, 0, 0);
             this.ctx.restore();
         }
         this.ctx.restore();

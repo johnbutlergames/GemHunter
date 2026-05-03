@@ -93,11 +93,11 @@ class Biome {
     async initialize() {
         console.log("----INITIALIZING BIOME----");
         this.initializeAttributes();
-        //await this.initializeName();
-        //await this.initializeMood();
-        //await this.initializeDescription();
-        //await this.initializeImagePrompt();
-        //await this.initializeImage();
+        await this.initializeName();
+        await this.initializeMood();
+        await this.initializeDescription();
+        await this.initializeImagePrompt();
+        await this.initializeImage();
         this.name = "Mistwood";
         this.image = new Image();
         this.image.src = "assets/mistwood.jpg";
