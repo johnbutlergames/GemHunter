@@ -108,6 +108,8 @@ class Biome {
             await this.initializeDescription();
             await this.initializeImagePrompt();
             await this.initializeImage();
+            this.mapColors = await interpretBiomeColors(this.description, this.palette);
+            console.log("Map colors:", this.mapColors);
         }
 
         console.log("----BIOME INITIALIZATION COMPLETE----")

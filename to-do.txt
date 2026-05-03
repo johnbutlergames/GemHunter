@@ -8,11 +8,11 @@ Kate:
 README (mostly done, add collaboration/issue tracking?)
 github pages!
 concept art
-- pixel plants
+DONE - pixel plants
 - animals
 - npcs
 - buildings
-- font/subfont
+DONE - font/subfont
 
 DONE - character sprite, gem sprite, arrow, 
 
