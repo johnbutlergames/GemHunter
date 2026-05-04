@@ -21,6 +21,14 @@ class EnvironmentManager {
         this.leaveBiomeArrow = new LeaveBiomeArrow(this);
         this.biomeCache = [];
     }
+    resetWithoutCacheClear() {
+        for (let biome of this.biomes) {
+            biome.environment.killed = false;
+            biome.environment.tiles = [];
+            biome.initializeTiles();
+            biome.gem.collected = false;
+        }
+    }
     get biomeNames() {
         let names = [];
         for (let biome of this.biomes) {
@@ -119,8 +127,8 @@ class EnvironmentManager {
                 gem.collect();
             }
         }
-        if(this.biomes.every(e=>e.environment?.gem?.collected) && this.biomes.length == 5) {
-            for(let biome of this.biomes) {
+        if (this.biomes.every(e => e.environment?.gem?.collected) && this.biomes.length == 5) {
+            for (let biome of this.biomes) {
                 biome.environment.kill();
             }
         }
