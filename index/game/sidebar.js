@@ -55,8 +55,9 @@ class SideBar {
         this.ctx.translate(this.width / 2 - (x1 + w / 2), 450 - (y1 + h / 2));
         for (let biome of biomes) {
             this.ctx.strokeStyle = "black";
-            this.ctx.lineWidth = 3;
+            this.ctx.lineWidth = 1;
             this.ctx.save();
+            this.ctx.scale(5,5);
             this.ctx.translate(biome.x * 1.2, biome.y * 1.2);
             if (biome == this.game.environmentManager.currentBiome) {
                 let s = 1 + Math.round(Math.sin(this.game.t / 10)) * 0.05;
@@ -64,7 +65,7 @@ class SideBar {
             }
             this.ctx.strokeRect(-biome.r, -biome.r, biome.r * 2, biome.r * 2);
             if (biome.environment?.gem && !biome.environment.gem.collected) {
-                this.ctx.scale(30, 30);
+                this.ctx.scale(5, 5);
                 this.ctx.imageSmoothingEnabled = false;
                 biome.environment.gem.drawSprite(this.ctx);
             }

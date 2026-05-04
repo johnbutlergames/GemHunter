@@ -1,5 +1,5 @@
 class EnvironmentManager {
-    static BIOME_SIZE = 40
+    static BIOME_SIZE = 10
     static SKIP_BIOME_ANIMATION = false
     static STOP_CACHE = false
     constructor(game) {
