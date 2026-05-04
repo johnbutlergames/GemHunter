@@ -25,7 +25,6 @@
   <div class="hero-glow"></div>
   <div class="gem-orbit" id="orbit"></div>
 
-  <div class="hero-eyebrow">✦ A Hackathon Project ✦</div>
   <h1 class="hero-title">GemHunter</h1>
   <div class="hero-subtitle">An AI-generated open world RPG</div>
 
@@ -41,20 +40,18 @@
     Every world is <em>unique</em> — and your choices
     leave a mark that can never be undone.
   </p>
-
-  <div class="hero-warning">⚠ collect all gems at your own risk ⚠</div>
 </div>
 
 <div class="full-divider"></div>
 
 <!-- ABOUT -->
 <section id="about">
-  <span class="section-tag">// 01 — about</span>
-  <h2>A world built by AI.<br>Destroyed by you.</h2>
+  <span class="section-tag">about</span>
+  <h2>A world built by AI.</h2>
 
-  <p>GemHunter is a browser-based pixel art RPG where <strong>Google Gemini generates a unique world every time you play</strong> — crafting a landscape description, generating pixel art through AI image generation, and extracting a color palette directly from that image to paint your map.</p>
+  <p>GemHunter is a browser-based pixel art RPG where <strong>Google Gemini generates a unique world every time you play</strong>, crafting a landscape description, generating pixel art through AI image generation, and extracting a color palette directly from that image to paint your map.</p>
 
-  <p>Each world is alive. The gems you're hunting are the <strong>lifeblood of the people who live there</strong>. You can choose to explore peacefully, leaving every world intact. Or you can take the gems — and watch what happens on your way back out.</p>
+  <p>Each world is alive. The gems you're hunting are the <strong>lifeblood of the land you walk on</strong>. You can choose to explore peacefully, leaving every world intact. Or you can take the gems — and watch what happens on your way back out.</p>
 
   <div class="feature-grid">
     <div class="feature-card">
@@ -70,12 +67,7 @@
     <div class="feature-card">
       <span class="feature-icon">💎</span>
       <div class="feature-title">Five gems, five worlds</div>
-      <div class="feature-desc">Each gem belongs to a world. Collect them all and a boss awaits — but so does the long walk home through everything you've taken.</div>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🩶</span>
-      <div class="feature-title">Your choice matters</div>
-      <div class="feature-desc">The game never forces you to collect anything. The desolation at the end only exists if you caused it.</div>
+      <div class="feature-desc">Each gem belongs to a world. Collect them all and return home through everything you've taken.</div>
     </div>
   </div>
 </section>
@@ -84,10 +76,10 @@
 
 <!-- HOW IT WORKS -->
 <section id="how">
-  <span class="section-tag">// 02 — how it works</span>
-  <h2>From prompt to<br>playable world.</h2>
+  <span class="section-tag">how it works</span>
+  <h2>From prompt to playable world.</h2>
 
-  <p>Every time you enter a new biome, a small pipeline runs behind the scenes to bring it to life.</p>
+  <p>Every time you enter a new biome, Gemini runs behind the scenes to bring it to life.</p>
 
   <div class="process-steps">
     <div class="process-step">
@@ -108,21 +100,21 @@
       <div class="step-num c3">03</div>
       <div class="step-body">
         <div class="step-title">Colors are extracted</div>
-        <p class="step-desc">A custom image sniffer samples the image in horizontal strips (sky, horizon, midground, ground) and finds vivid accent colors — catching small details like flowers that averages would miss.</p>
+        <p class="step-desc">Our code samples the image in horizontal strips (sky, horizon, midground, ground) and finds vivid accent colors.</p>
       </div>
     </div>
     <div class="process-step">
       <div class="step-num c4">04</div>
       <div class="step-body">
         <div class="step-title">Gemini paints the map</div>
-        <p class="step-desc">The palette is sent back to Gemini along with the biome description. It assigns colors to grass, ground, rock, plants, and special terrain — then the map is drawn on canvas.</p>
+        <p class="step-desc">The palette is sent back to Gemini along with the biome description. It assigns colors to grass, ground, rock, plants, and special terrain, then the map is drawn and ready to be explored.</p>
       </div>
     </div>
     <div class="process-step">
       <div class="step-num c5">05</div>
       <div class="step-body">
         <div class="step-title">You decide what happens next</div>
-        <p class="step-desc">The world is yours. Explore, or hunt. But remember — the gems belong to someone.</p>
+        <p class="step-desc">The world is yours. Explore, or hunt. But remember: your actions have consequences.</p>
       </div>
     </div>
   </div>
@@ -132,10 +124,10 @@
 
 <!-- INSTALL -->
 <section id="install">
-  <span class="section-tag">// 03 — try it yourself</span>
-  <h2>Get it running<br>in four steps.</h2>
+  <span class="section-tag">try it yourself</span>
+  <h2>Get it running in four steps.</h2>
 
-  <p>You'll need <strong>Node.js</strong> and a free <strong>Google Gemini API key</strong> — no credit card required.</p>
+  <p>You'll need <strong>Node.js</strong> and a free <strong>Google Gemini API key</strong>.</p>
 
   <div class="install-steps">
     <div class="install-step">
@@ -156,47 +148,47 @@
       <div class="install-num">03</div>
       <div>
         <div class="install-title">Add your Gemini API key</div>
-        <div class="install-desc">Get a free key at <strong>aistudio.google.com/app/apikey</strong> — no billing needed. Create a <code>.env</code> file and add <code>GEMINI_API_KEY=your_key_here</code>.</div>
+        <div class="install-desc">Get a free key at <strong>aistudio.google.com/app/apikey</strong>. Create a <code>.env</code> file and add <code>GEMINI_API_KEY=your_key_here</code>.</div>
       </div>
     </div>
     <div class="install-step">
       <div class="install-num">04</div>
       <div>
         <div class="install-title">Start the game</div>
-        <div class="install-desc">Run <code>npm run start</code> — your browser will open automatically.</div>
+        <div class="install-desc">Run <code>npm run start</code> and explore the world of GemHunter!</div>
       </div>
     </div>
   </div>
 
-  <div class="note">✦ The Gemini free tier is generous enough to play through multiple full runs. No surprises.</div>
+  <div class="note">Check out our <a href="https://github.com/johnbutlergames/GemHunter/blob/main/README.md">README.md</a> for detailed installation instructions.</div>
 </section>
 
 <div class="full-divider"></div>
 
 <!-- TEAM -->
 <section id="team">
-  <span class="section-tag">// 04 — the team</span>
-  <h2>Built in 23 hours.<br>Powered by caffeine.</h2>
+  <span class="section-tag">meet the team</span>
+  <h2>Built in 23 hours.</h2>
 
-  <p>GemHunter was made at a hackathon by two siblings. One built the world, one documented it.</p>
+  <p>GemHunter was made at Oregon State University's 2026 Beaverhacks by two siblings.</p>
 
   <div class="team-grid">
     <div class="team-card">
-      <div class="team-avatar c1">🧑‍💻</div>
-      <div class="team-name">Your Name</div>
-      <div class="team-role">Docs, design, gems & color pipeline</div>
+      <div class="team-avatar c1">JB</div>
+      <div class="team-name">John Butler</div>
+      <div class="team-role">Backend, map generation & game engine</div>
       <div class="team-links">
-        <a class="team-link" href="https://github.com/yourusername" target="_blank">GitHub</a>
-        <a class="team-link" href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
+        <a class="team-link" href="https://github.com/johnbutlergames" target="_blank">GitHub</a>
+        <a class="team-link" href="https://johnbutlergames.com/" target="_blank">Website</a>
       </div>
     </div>
     <div class="team-card">
-      <div class="team-avatar c5">🧑‍💻</div>
-      <div class="team-name">Brother's Name</div>
-      <div class="team-role">Backend, map generation & game engine</div>
+      <div class="team-avatar c5">KB</div>
+      <div class="team-name">Kathryn Butler</div>
+      <div class="team-role">Frontend, docs & color pipeline</div>
       <div class="team-links">
-        <a class="team-link" href="https://github.com/brothersusername" target="_blank">GitHub</a>
-        <a class="team-link" href="https://linkedin.com/in/brothersusername" target="_blank">LinkedIn</a>
+        <a class="team-link" href="https://github.com/KathrynJButler" target="_blank">GitHub</a>
+        <a class="team-link" href="https://linkedin.com/in/kathryn-j-butler" target="_blank">LinkedIn</a>
       </div>
     </div>
   </div>
@@ -204,7 +196,7 @@
 
 <footer>
   <span class="footer-logo">GemHunter</span>
-  Made with ♥ and very little sleep · Built on Google Gemini · Hackathon 2025
+  Made with ♥ and very little sleep · Built on Google Gemini · Beaverhacks 2026
 </footer>
 
 <script>
