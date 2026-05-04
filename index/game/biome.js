@@ -306,10 +306,11 @@ class Biome {
     async initializeImage() {
         console.log("....initializing image....");
         let imageSrc = await generateImage(this.imagePrompt);
-        this.image = await new Promise((resolve, reject) => {
+        this.image = new Image();
+        this.image.src = imageSrc;
+        await new Promise((resolve, reject) => {
             let image = new Image();
             image.src = imageSrc;
-            this.image = image;
             image.onload = () => resolve(image);
         });
     }
